@@ -14,8 +14,8 @@ type Invoice = {
 
 type client = {
 	id: string;
-	city: string;
 	clientStatus: ClientStatus;
+	city: string;
 	email: string;
 	name: string;
 	state: string;
