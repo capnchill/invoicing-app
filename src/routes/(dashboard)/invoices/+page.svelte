@@ -39,7 +39,7 @@
 		<h3>Due Date</h3>
 		<h3>Id</h3>
 		<h3>Client</h3>
-		<h3>Amount</h3>
+		<h3 class="text-right">Amount</h3>
 		<div />
 		<div />
 	</div>

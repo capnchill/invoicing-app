@@ -2,6 +2,7 @@
 	import View from '$lib/components/Icon/View.svelte';
 	import ThreeDots from '$lib/components/Icon/ThreeDots.svelte';
 	import Tag from '$lib/components/Tag.svelte';
+	import { centsToDollars, sumLineItems } from '$lib/utils/moneyHelper';
 
 	export let invoice: Invoice;
 </script>
@@ -9,12 +10,16 @@
 <div
 	class="invoice-table invoice-row items-center rounded-lg bg-white py-3 shadow-tableRow lg:py-6"
 >
-	<div class="status"><Tag className="ml:auto lg:ml-0" label={invoice.invoiceStatus} /></div>
+	<div class="status">
+		<Tag className="ml:auto lg:ml-0" label={invoice.invoiceStatus} />
+	</div>
 	<div class="dueDate text-sm lg:text-lg">{invoice.dueDate}</div>
 	<div class="invoiceNumber text-sm lg:text-lg">{invoice.invoiceNumber}</div>
-	<div class="clientName text-base font-bold lg:text-xl">{invoice.client.name}</div>
+	<div class="clientName truncate whitespace-nowrap text-base font-bold lg:text-xl">
+		{invoice.client.name}
+	</div>
 	<div class="amount text-right font-mono text-sm font-bold lg:text-lg">
-		${invoice.lineItems?.reduce((sum, item) => sum + item.amount, 0)}
+		${centsToDollars(sumLineItems(invoice.lineItems))}
 	</div>
 	<div class="center viewButton text-sm lg:text-lg">
 		<a href="#" class="hidden text-pastelPurple hover:bg-daisyBush lg:block"><View /></a>
@@ -25,10 +30,6 @@
 </div>
 
 <style lang="postcss">
-	.table-header h3 {
-		@apply text-xl font-black leading-snug;
-	}
-
 	.invoice-row {
 		grid-template-areas:
 			'invoiceNumber invoiceNumber'
