@@ -1,9 +1,45 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import Close from '$lib/components/Icon/Close.svelte';
+	import Hamburger from './Icon/Hamburger.svelte';
+
+	let isNavShowing = false;
 </script>
 
-<header class="col-span-3 bg-daisyBush text-center">
-	<a href="/invoices"><img src="/images/logo.svg" alt="logo" class="mx-auto my-16" /></a>
+<!-- sveltehead added to lock down scrolling -->
+<svelte:head>
+	{#if isNavShowing}
+		<style lang="postcss">
+			body {
+				@apply overflow-hidden md:overflow-auto;
+			}
+		</style>
+	{/if}
+</svelte:head>
+
+<button
+	class="fixed right-6 top-6 z-10 md:hidden"
+	class:text-goldenFizz={isNavShowing}
+	class:text-daisyBush={!isNavShowing}
+	on:click={() => {
+		isNavShowing = !isNavShowing;
+	}}
+>
+	{#if isNavShowing}
+		<Close height={32} width={32} />
+	{:else}
+		<Hamburger height={32} width={32} />
+	{/if}
+</button>
+
+<header
+	class="fixed h-screen w-full -translate-x-full bg-daisyBush text-center transition-transform md:relative md:col-span-3 md:h-full md:translate-x-0"
+	class:translate-x-0={isNavShowing}
+>
+	<div class="my-10 md:mb-24">
+		<a href="/invoices"><img src="/images/logo.svg" alt="logo" class="mx-auto" /></a>
+	</div>
+
 	<nav>
 		<ul class="flex flex-col gap-2 text-2xl font-bold">
 			<li><a href="/invoices" class:active={$page.url.pathname === '/invoices'}>Invoices</a></li>
