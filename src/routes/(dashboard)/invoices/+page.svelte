@@ -46,9 +46,12 @@
 	</div>
 
 	<!-- invoices -->
-	{#each $invoices as invoice}
-		<InvoiceRow {invoice} />
-	{/each}
+	<!-- flex-col-reverse is done so that the stacking order logic is maintained -->
+	<div class="flex flex-col-reverse">
+		{#each $invoices as invoice}
+			<InvoiceRow {invoice} />
+		{/each}
+	</div>
 </div>
 
 <CircledAmount amount={centsToDollars(sumInvoices($invoices))} label="Total" />

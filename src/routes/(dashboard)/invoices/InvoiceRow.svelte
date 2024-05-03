@@ -4,17 +4,38 @@
 	import Tag from '$lib/components/Tag.svelte';
 	import { centsToDollars, sumLineItems } from '$lib/utils/moneyHelper';
 	import { convertDate, isLate } from '$lib/utils/datesHelpers';
+	import AdditionalOptions from '$lib/components/AdditionalOptions.svelte';
+	import Send from '$lib/components/Icon/Send.svelte';
+	import Edit from '$lib/components/Icon/Edit.svelte';
+	import Trash from '$lib/components/Icon/Trash.svelte';
 
 	export let invoice: Invoice;
+	let isAdditionalMenuShowing = false;
+	let isOptionsDisabled = false;
+
+	function handleDelete() {
+		console.log('deleting invoice');
+	}
+
+	function handleEdit() {
+		console.log('editing invoice');
+	}
+
+	function handleSendInvoice() {
+		console.log('sending invoice');
+	}
 
 	function getInvoiceLabel() {
 		if (invoice.invoiceStatus === 'Draft') {
 			return 'draft';
 		} else if (invoice.invoiceStatus === 'sent' && !isLate(invoice.dueDate)) {
+			isOptionsDisabled = true;
 			return 'sent';
 		} else if (invoice.invoiceStatus === 'sent' && isLate(invoice.dueDate)) {
+			isOptionsDisabled = true;
 			return 'late';
 		} else if (invoice.invoiceStatus === 'paid') {
+			isOptionsDisabled = true;
 			return 'paid';
 		}
 	}
@@ -34,11 +55,23 @@
 	<div class="amount text-right font-mono text-sm font-bold lg:text-lg">
 		${centsToDollars(sumLineItems(invoice.lineItems))}
 	</div>
-	<div class="center viewButton text-sm lg:text-lg">
-		<a href="#" class="hidden text-pastelPurple hover:bg-daisyBush lg:block"><View /></a>
+	<div class="center viewButton hidden text-sm lg:flex lg:text-lg">
+		<a href="#" class="text-pastelPurple hover:bg-daisyBush"><View /></a>
 	</div>
-	<div class="center moreButton text-sm lg:text-lg">
-		<button class="hidden text-pastelPurple hover:text-daisyBush lg:block"><ThreeDots /></button>
+	<div class="center moreButton relative text-sm lg:flex lg:text-lg">
+		<button
+			class="text-pastelPurple hover:text-daisyBush"
+			on:click={() => (isAdditionalMenuShowing = !isAdditionalMenuShowing)}><ThreeDots /></button
+		>
+		{#if isAdditionalMenuShowing}
+			<AdditionalOptions
+				options={[
+					{ label: 'Edit', icon: Edit, onClick: handleEdit, disabled: isOptionsDisabled },
+					{ label: 'Delete', icon: Trash, onClick: handleDelete, disabled: false },
+					{ label: 'Send', icon: Send, onClick: handleSendInvoice, disabled: isOptionsDisabled }
+				]}
+			/>
+		{/if}
 	</div>
 </div>
 
