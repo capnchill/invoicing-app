@@ -5,6 +5,7 @@
 
 	import InvoiceRow from './InvoiceRow.svelte';
 	import Search from '$lib/components/Search.svelte';
+	import Portal from '$lib/components/Portal.svelte';
 	import CircledAmount from '$lib/components/CircledAmount.svelte';
 	import { onMount } from 'svelte';
 	import { centsToDollars, sumInvoices } from '$lib/utils/moneyHelper';
@@ -30,7 +31,7 @@
 		<div></div>
 	{/if}
 
-	<!-- invoice button -->
+	<!-- new invoice button -->
 	<div>
 		<button
 			class="relative translate-y-0 whitespace-nowrap rounded-lg bg-lavenderIndigo px-5 py-2 font-sansSerif text-base font-black text-white shadow-colored transition-all hover:-translate-y-2 hover:shadow-coloredHover lg:px-10 lg:py-3 lg:text-xl"
@@ -42,6 +43,9 @@
 <!-- blank state, when $invoice.length is 0, render the BlankState Component -->
 
 <div>
+	<!-- portal element for slide out panels, modals etc -->
+	<Portal>This is from the portal</Portal>
+
 	{#if $invoices === null}
 		Loading ...
 	{:else if $invoices.length === 0}
@@ -60,8 +64,6 @@
 		<CircledAmount amount={centsToDollars(sumInvoices($invoices))} label="Total" />
 	{/if}
 </div>
-
-<!-- list of invoices -->
 
 <style lang="postcss">
 	.table-header h3 {
