@@ -5,8 +5,8 @@
 		label: string;
 		// a constructor function that can accept any number of arguments and return a sveltecomponent
 		icon?: new (...args: any[]) => SvelteComponent;
-		disabled: boolean;
 		onClick: () => void;
+		disabled: boolean;
 	}[];
 </script>
 

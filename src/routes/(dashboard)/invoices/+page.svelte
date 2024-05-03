@@ -1,4 +1,6 @@
 <script lang="ts">
+	import InvoiceRowHeader from './InvoiceRowHeader.svelte';
+
 	import { invoices, loadInvoices } from '$lib/stores/InvoiceStore';
 
 	import InvoiceRow from './InvoiceRow.svelte';
@@ -6,6 +8,7 @@
 	import CircledAmount from '$lib/components/CircledAmount.svelte';
 	import { onMount } from 'svelte';
 	import { centsToDollars, sumInvoices } from '$lib/utils/moneyHelper';
+	import BlankState from './BlankState.svelte';
 
 	onMount(() => {
 		loadInvoices();
@@ -21,7 +24,11 @@
 	class="mb-7 flex flex-col-reverse items-start justify-between gap-y-6 md:flex-row md:items-center md:gap-y-4 lg:mb-16"
 >
 	<!-- Search Field -->
-	<Search />
+	{#if $invoices.length > 0}
+		<Search />
+	{:else}
+		<div></div>
+	{/if}
 
 	<!-- invoice button -->
 	<div>
@@ -32,29 +39,29 @@
 	</div>
 </div>
 
-<!-- list of invoices -->
-<div>
-	<!-- header -->
-	<div class="table-header invoice-table hidden text-daisyBush lg:grid">
-		<h3>Status</h3>
-		<h3>Due Date</h3>
-		<h3>Id</h3>
-		<h3>Client</h3>
-		<h3 class="text-right">Amount</h3>
-		<div />
-		<div />
-	</div>
+<!-- blank state, when $invoice.length is 0, render the BlankState Component -->
 
-	<!-- invoices -->
-	<!-- flex-col-reverse is done so that the stacking order logic is maintained -->
-	<div class="flex flex-col-reverse">
-		{#each $invoices as invoice}
-			<InvoiceRow {invoice} />
-		{/each}
-	</div>
+<div>
+	{#if $invoices === null}
+		Loading ...
+	{:else if $invoices.length === 0}
+		<BlankState />
+	{:else}
+		<!-- header -->
+		<InvoiceRowHeader className="text-daisyBush" />
+
+		<!-- invoices -->
+		<!-- flex-col-reverse is done so that the stacking order logic is maintained -->
+		<div class="flex flex-col-reverse">
+			{#each $invoices as invoice}
+				<InvoiceRow {invoice} />
+			{/each}
+		</div>
+		<CircledAmount amount={centsToDollars(sumInvoices($invoices))} label="Total" />
+	{/if}
 </div>
 
-<CircledAmount amount={centsToDollars(sumInvoices($invoices))} label="Total" />
+<!-- list of invoices -->
 
 <style lang="postcss">
 	.table-header h3 {
