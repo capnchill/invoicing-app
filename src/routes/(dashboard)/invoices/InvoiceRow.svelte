@@ -8,21 +8,29 @@
 	import Send from '$lib/components/Icon/Send.svelte';
 	import Edit from '$lib/components/Icon/Edit.svelte';
 	import Trash from '$lib/components/Icon/Trash.svelte';
+	import Modal from '$lib/components/Modal.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import { deleteInvoice } from '$lib/stores/InvoiceStore';
 
 	export let invoice: Invoice;
 	let isAdditionalMenuShowing = false;
 	let isOptionsDisabled = false;
+	let isModalShowing = false;
 
 	function handleDelete() {
 		console.log('deleting invoice');
+		isModalShowing = true;
+		isAdditionalMenuShowing = false;
 	}
 
 	function handleEdit() {
 		console.log('editing invoice');
+		isModalShowing = true;
 	}
 
 	function handleSendInvoice() {
 		console.log('sending invoice');
+		isModalShowing = true;
 	}
 
 	function getInvoiceLabel() {
@@ -45,7 +53,7 @@
 	class="invoice-table invoice-row items-center rounded-lg bg-white py-3 shadow-tableRow lg:py-6"
 >
 	<div class="status">
-		<Tag className="ml:auto lg:ml-0" label={getInvoiceLabel()} />
+		<Tag className="lg:ml-0 ml-auto" label={getInvoiceLabel()} />
 	</div>
 	<div class="dueDate text-sm lg:text-lg">{convertDate(invoice.dueDate)}</div>
 	<div class="invoiceNumber text-sm lg:text-lg">{invoice.invoiceNumber}</div>
@@ -55,12 +63,12 @@
 	<div class="amount text-right font-mono text-sm font-bold lg:text-lg">
 		${centsToDollars(sumLineItems(invoice.lineItems))}
 	</div>
-	<div class="center viewButton hidden text-sm lg:flex lg:text-lg">
-		<a href="#" class="text-pastelPurple hover:bg-daisyBush"><View /></a>
+	<div class="center viewButton text-sm lg:flex lg:text-lg">
+		<a href="#" class="hidden text-pastelPurple hover:bg-daisyBush lg:block"><View /></a>
 	</div>
 	<div class="center moreButton relative text-sm lg:flex lg:text-lg">
 		<button
-			class="text-pastelPurple hover:text-daisyBush"
+			class="hidden text-pastelPurple hover:text-daisyBush lg:block"
 			on:click={() => (isAdditionalMenuShowing = !isAdditionalMenuShowing)}><ThreeDots /></button
 		>
 		{#if isAdditionalMenuShowing}
@@ -74,6 +82,34 @@
 		{/if}
 	</div>
 </div>
+
+<Modal isVisible={isModalShowing} on:close={() => (isModalShowing = false)}>
+	<div class="flex h-full min-h-[175px] flex-col items-center justify-between gap-6">
+		<div class="text-center text-xl font-bold text-daisyBush">
+			Are you sure you want to delete this invoice to
+			<span class="text-scarlet">{invoice.client.name}</span> for
+			<span class="text-scarlet">${centsToDollars(sumLineItems(invoice.lineItems))}</span>
+			?
+		</div>
+		<div class="flex gap-4">
+			<Button
+				label="Cancel"
+				onClick={() => (isModalShowing = false)}
+				isAnimated={false}
+				style="secondary"
+			/>
+			<Button
+				label="Yes, Delete it"
+				onClick={() => {
+					deleteInvoice(invoice);
+					isModalShowing = false;
+				}}
+				isAnimated={false}
+				style="destructive"
+			/>
+		</div>
+	</div>
+</Modal>
 
 <style lang="postcss">
 	.invoice-row {
