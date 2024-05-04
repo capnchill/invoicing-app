@@ -11,6 +11,7 @@
 	import { centsToDollars, sumInvoices } from '$lib/utils/moneyHelper';
 	import BlankState from './BlankState.svelte';
 	import SlidePanel from '$lib/components/SlidePanel.svelte';
+	import InvoiceForm from './InvoiceForm.svelte';
 
 	let isInvoiceShowing = false;
 
@@ -64,7 +65,5 @@
 
 <!-- Slide panel -->
 {#if isInvoiceShowing}
-	<SlidePanel on:closePanel={() => (isInvoiceShowing = false)}
-		>Hey this message is from the slide in panel</SlidePanel
-	>
+	<SlidePanel on:closePanel={() => (isInvoiceShowing = false)}><InvoiceForm /></SlidePanel>
 {/if}
