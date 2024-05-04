@@ -19,7 +19,9 @@
 	<!-- Overlay will hide all the content in the page -->
 	<Overlay />
 
-	<div class="shadow-slidePanel fixed right-0 top-0 z-slidePanel h-full w-3/4 bg-white px-32 py-20">
+	<div
+		class="fixed right-0 top-0 z-slidePanel h-full w-3/4 overflow-y-scroll bg-white px-32 py-20 shadow-slidePanel"
+	>
 		<div class="absolute left-7 top-5 text-pastelPurple hover:text-daisyBush">
 			<button on:click={() => dispatch('closePanel')}>
 				<Arrow />
