@@ -10,6 +10,9 @@
 	import { onMount } from 'svelte';
 	import { centsToDollars, sumInvoices } from '$lib/utils/moneyHelper';
 	import BlankState from './BlankState.svelte';
+	import SlidePanel from '$lib/components/SlidePanel.svelte';
+
+	let isInvoiceShowing = false;
 
 	onMount(() => {
 		loadInvoices();
@@ -33,7 +36,7 @@
 
 	<!-- new invoice button -->
 	<div>
-		<Button label="+ Invoice" onClick={() => {}} isAnimated={true} />
+		<Button label="+ Invoice" onClick={() => (isInvoiceShowing = true)} isAnimated={true} />
 	</div>
 </div>
 
@@ -58,3 +61,10 @@
 		<CircledAmount amount={centsToDollars(sumInvoices($invoices))} label="Total" />
 	{/if}
 </div>
+
+<!-- Slide panel -->
+{#if isInvoiceShowing}
+	<SlidePanel on:closePanel={() => (isInvoiceShowing = false)}
+		>Hey this message is from the slide in panel</SlidePanel
+	>
+{/if}
