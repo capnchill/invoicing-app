@@ -45,12 +45,20 @@
 }
 
 @layer components {
+    .button {
+        @apply relative flex items-center whitespace-nowrap rounded-lg px-5 py-2 font-sansSerif text-base font-black lg:px-10 lg:py-3 lg:text-xl
+    }
+
     .invoice-table {
         @apply grid grid-cols-invoiceTableMobile lg:grid-cols-invoiceTable gap-x-4 px-4 lg:px-6 mb-3 w-full
     }
 
     .invoice-line-item {
         @apply grid grid-cols-invoiceLineItem gap-x-5
+    }
+
+    .field {
+        @apply mb-6
     }
 }
 

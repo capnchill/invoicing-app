@@ -2,11 +2,12 @@
 	import { slide } from 'svelte/transition';
 	import Button from '$lib/components/Button.svelte';
 	import Trash from '$lib/components/Icon/Trash.svelte';
-	import LineItemsRow from './LineItemRows.svelte';
+	import LineItemRows from './LineItemRows.svelte';
 	import { v4 as uuidv4 } from 'uuid';
 	import { states } from '$lib/utils/states';
 	import { onMount } from 'svelte';
 	import { loadClients, clients } from '$lib/stores/ClientStore';
+	import { today } from '$lib/utils/datesHelpers';
 
 	const blankLineItem = {
 		description: '',
@@ -41,7 +42,7 @@
 
 <h2 class="mb-7 font-sansSerif text-3xl font-bold text-daisyBush">Add an Invoice</h2>
 
-<form class="grid grid-cols-6 gap-x-5 gap-y-5">
+<form class="grid grid-cols-6 gap-x-5">
 	<!-- client -->
 	<div class="field col-span-4">
 		{#if !isNewClient}
@@ -82,13 +83,13 @@
 
 	<!-- Invoice id -->
 	<div class="field col-span-2">
-		<label for="id">Invoice id</label>
-		<input type="number" name="id" id="id" />
+		<label for="invoiceNumber">Invoice id</label>
+		<input type="number" name="invoiceNumber" id="invoiceNumber" required />
 	</div>
 
 	<!-- New client information -->
 	{#if isNewClient}
-		<div class="field col-span-6 grid gap-6" transition:slide>
+		<div class="field col-span-6 grid gap-x-5" transition:slide>
 			<div class="field col-span-6">
 				<label for="email">Client's Email</label>
 				<input type="email" name="email" id="email" />
@@ -124,13 +125,13 @@
 	<!-- due date -->
 	<div class="field col-span-2">
 		<label for="dueDate">Due Date</label>
-		<input type="date" name="dueDate" id="dueDate" />
+		<input type="date" name="dueDate" id="dueDate" min={today} required />
 	</div>
 
 	<!-- issue date -->
 	<div class="field col-span-2 col-start-5">
 		<label for="issueDate">Issue Date</label>
-		<input type="date" name="issueDate" id="issueDate" />
+		<input type="date" name="issueDate" id="issueDate" min={today} required />
 	</div>
 
 	<!-- subject -->
@@ -141,7 +142,7 @@
 
 	<!-- invoice items table -->
 	<div class="field col-span-6">
-		<LineItemsRow
+		<LineItemRows
 			{lineItems}
 			on:addLineItem={AddLineItem}
 			on:removeLineItem={RemoveLineItem}
@@ -182,6 +183,11 @@
 
 	<div class="field col-span-4 flex justify-end gap-x-5">
 		<Button label="Cancel" style="secondary" isAnimated={false} onClick={() => {}} />
-		<Button label="Save" style="outline" isAnimated={false} onClick={() => {}} />
+		<button
+			class="button translate-y-0 bg-lavenderIndigo text-white shadow-colored transition-all hover:-translate-y-2 hover:shadow-coloredHover"
+			type="submit">Save</button
+		>
+		<!-- using a standard save button instead of the button component here, 
+			becuase the standard button component has a prevent default event modifier attached to it -->
 	</div>
 </form>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { SvelteComponent } from 'svelte';
+	import type { SvelteComponent } from 'svelte';
 
 	export let label: string;
 	export let onClick: () => void;
@@ -17,7 +17,7 @@
 </script>
 
 <button
-	class="relative flex items-center whitespace-nowrap rounded-lg px-5 py-2 font-sansSerif text-base font-black lg:px-10 lg:py-3 lg:text-xl"
+	class="button"
 	on:click|preventDefault={() => onClick()}
 	class:isAnimated
 	class:primary={style === 'primary'}
