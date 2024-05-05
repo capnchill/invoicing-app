@@ -1,38 +1,202 @@
-export const states: { value: string; name: string }[] = [
-	{ value: 'AP', name: 'Andhra Pradesh' },
-	{ value: 'AR', name: 'Arunachal Pradesh' },
-	{ value: 'AS', name: 'Assam' },
-	{ value: 'BR', name: 'Bihar' },
-	{ value: 'CT', name: 'Chhattisgarh' },
-	{ value: 'GA', name: 'Goa' },
-	{ value: 'GJ', name: 'Gujarat' },
-	{ value: 'HR', name: 'Haryana' },
-	{ value: 'HP', name: 'Himachal Pradesh' },
-	{ value: 'JH', name: 'Jharkhand' },
-	{ value: 'KA', name: 'Karnataka' },
-	{ value: 'KL', name: 'Kerala' },
-	{ value: 'MP', name: 'Madhya Pradesh' },
-	{ value: 'MH', name: 'Maharashtra' },
-	{ value: 'MN', name: 'Manipur' },
-	{ value: 'ML', name: 'Meghalaya' },
-	{ value: 'MZ', name: 'Mizoram' },
-	{ value: 'NL', name: 'Nagaland' },
-	{ value: 'OD', name: 'Odisha' },
-	{ value: 'PB', name: 'Punjab' },
-	{ value: 'RJ', name: 'Rajasthan' },
-	{ value: 'SK', name: 'Sikkim' },
-	{ value: 'TN', name: 'Tamil Nadu' },
-	{ value: 'TS', name: 'Telangana' },
-	{ value: 'TR', name: 'Tripura' },
-	{ value: 'UP', name: 'Uttar Pradesh' },
-	{ value: 'UT', name: 'Uttarakhand' },
-	{ value: 'WB', name: 'West Bengal' },
-	{ value: 'AN', name: 'Andaman and Nicobar Islands' },
-	{ value: 'CH', name: 'Chandigarh' },
-	{ value: 'DN', name: 'Dadra and Nagar Haveli and Daman and Diu' },
-	{ value: 'DL', name: 'Delhi' },
-	{ value: 'JK', name: 'Jammu and Kashmir' },
-	{ value: 'LD', name: 'Lakshadweep' },
-	{ value: 'LA', name: 'Ladakh' },
-	{ value: 'PY', name: 'Puducherry' }
+export const states = [
+	{
+		value: 'AK',
+		name: 'Alaska'
+	},
+	{
+		value: 'AL',
+		name: 'Alabama'
+	},
+	{
+		value: 'AR',
+		name: 'Arkansas'
+	},
+	{
+		value: 'AZ',
+		name: 'Arizona'
+	},
+	{
+		value: 'CA',
+		name: 'California'
+	},
+	{
+		value: 'CO',
+		name: 'Colorado'
+	},
+	{
+		value: 'CT',
+		name: 'Connecticut'
+	},
+	{
+		value: 'DE',
+		name: 'Delaware'
+	},
+	{
+		value: 'FL',
+		name: 'Florida'
+	},
+	{
+		value: 'GA',
+		name: 'Georgia'
+	},
+	{
+		value: 'HI',
+		name: 'Hawaii'
+	},
+	{
+		value: 'IA',
+		name: 'Iowa'
+	},
+	{
+		value: 'ID',
+		name: 'Idaho'
+	},
+	{
+		value: 'IL',
+		name: 'Illinois'
+	},
+	{
+		value: 'IN',
+		name: 'Indiana'
+	},
+	{
+		value: 'KS',
+		name: 'Kansas'
+	},
+	{
+		value: 'KY',
+		name: 'Kentucky'
+	},
+	{
+		value: 'LA',
+		name: 'Louisiana'
+	},
+	{
+		value: 'MA',
+		name: 'Massachusetts'
+	},
+	{
+		value: 'MD',
+		name: 'Maryland'
+	},
+	{
+		value: 'ME',
+		name: 'Maine'
+	},
+	{
+		value: 'MI',
+		name: 'Michigan'
+	},
+	{
+		value: 'MN',
+		name: 'Minnesota'
+	},
+	{
+		value: 'MO',
+		name: 'Missouri'
+	},
+	{
+		value: 'MS',
+		name: 'Mississippi'
+	},
+	{
+		value: 'MT',
+		name: 'Montana'
+	},
+	{
+		value: 'NC',
+		name: 'North Carolina'
+	},
+	{
+		value: 'ND',
+		name: 'North Dakota'
+	},
+	{
+		value: 'NE',
+		name: 'Nebraska'
+	},
+	{
+		value: 'NH',
+		name: 'New Hampshire'
+	},
+	{
+		value: 'NJ',
+		name: 'New Jersey'
+	},
+	{
+		value: 'NM',
+		name: 'New Mexico'
+	},
+	{
+		value: 'NV',
+		name: 'Nevada'
+	},
+	{
+		value: 'NY',
+		name: 'New York'
+	},
+	{
+		value: 'OH',
+		name: 'Ohio'
+	},
+	{
+		value: 'OK',
+		name: 'Oklahoma'
+	},
+	{
+		value: 'OR',
+		name: 'Oregon'
+	},
+	{
+		value: 'PA',
+		name: 'Pennsylvania'
+	},
+	{
+		value: 'RI',
+		name: 'Rhode Island'
+	},
+	{
+		value: 'SC',
+		name: 'South Carolina'
+	},
+	{
+		value: 'SD',
+		name: 'South Dakota'
+	},
+	{
+		value: 'TN',
+		name: 'Tennessee'
+	},
+	{
+		value: 'TX',
+		name: 'Texas'
+	},
+	{
+		value: 'UT',
+		name: 'Utah'
+	},
+	{
+		value: 'VA',
+		name: 'Virginia'
+	},
+	{
+		value: 'VT',
+		name: 'Vermont'
+	},
+	{
+		value: 'WA',
+		name: 'Washington'
+	},
+	{
+		value: 'WI',
+		name: 'Wisconsin'
+	},
+	{
+		value: 'WV',
+		name: 'West Virginia'
+	},
+	{
+		value: 'WY',
+		name: 'Wyoming'
+	}
 ];

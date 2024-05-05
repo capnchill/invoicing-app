@@ -5,6 +5,8 @@
 	import LineItemsRow from './LineItemRows.svelte';
 	import { v4 as uuidv4 } from 'uuid';
 	import { states } from '$lib/utils/states';
+	import { onMount } from 'svelte';
+	import { loadClients, clients } from '$lib/stores/ClientStore';
 
 	const blankLineItem = {
 		description: '',
@@ -30,6 +32,11 @@
 	function UpdateLineItem() {
 		lineItems = lineItems;
 	}
+
+	onMount(() => {
+		loadClients();
+		console.log($clients);
+	});
 </script>
 
 <h2 class="mb-7 font-sansSerif text-3xl font-bold text-daisyBush">Add an Invoice</h2>
@@ -42,7 +49,9 @@
 
 			<div class="flex items-end gap-x-5">
 				<select name="client" id="client" class="bg-transparent">
-					<option value="Zeak">ZEAL</option>
+					{#each $clients as client}
+						<option value={client.id}>{client.name}</option>
+					{/each}
 				</select>
 				<div class="text-base font-bold leading-[3.5rem] text-monsoon">or</div>
 				<Button
@@ -79,7 +88,7 @@
 
 	<!-- New client information -->
 	{#if isNewClient}
-		<div class="field col-span-6 grid gap-x-6" transition:slide>
+		<div class="field col-span-6 grid gap-6" transition:slide>
 			<div class="field col-span-6">
 				<label for="email">Client's Email</label>
 				<input type="email" name="email" id="email" />
