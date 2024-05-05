@@ -17,8 +17,8 @@
 </div>
 
 {#if lineItems}
-	{#each lineItems as LineItem}
-		<LineItemRow {LineItem} on:removeLineItem />
+	{#each lineItems as LineItem, index}
+		<LineItemRow {LineItem} on:removeLineItem canDelete={index > 0} />
 	{/each}
 {/if}
 

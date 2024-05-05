@@ -1,34 +1,71 @@
 <script lang="ts">
 	import Trash from '$lib/components/Icon/Trash.svelte';
+	import { twoDecimals, dollarsToCents } from '$lib/utils/moneyHelper';
 	import { createEventDispatcher } from 'svelte';
 
 	export let LineItem: lineItems;
+	export let canDelete: boolean = false;
 
 	let dispatch = createEventDispatcher();
+
+	let unitPrice = twoDecimals(LineItem.amount / LineItem.quantity);
+	let amount = twoDecimals(LineItem.amount);
+
+	// the reactive block is the same as useEffect() hook in react
+	$: {
+		amount = twoDecimals(LineItem.quantity * Number(unitPrice));
+		LineItem.amount = dollarsToCents(Number(amount));
+	}
 </script>
 
 <div class="invoice-line-item border-b-2 border-fog py-2">
 	<div>
-		<input class="line-item" type="text" name="descripition" />
+		<input class="line-item" type="text" name="descripition" bind:value={LineItem.description} />
 	</div>
 
 	<div>
-		<input class="line-item text-right" type="number" name="unitPrice" step="0.01" min="0" />
+		<input
+			class="line-item text-right"
+			type="number"
+			name="unitPrice"
+			step="0.01"
+			min="0"
+			bind:value={unitPrice}
+			on:blur={() => {
+				unitPrice = twoDecimals(Number(unitPrice));
+			}}
+		/>
 	</div>
 
 	<div>
-		<input class="line-item text-center" type="number" name="quantity" min="0" />
+		<input
+			class="line-item text-center"
+			type="number"
+			name="quantity"
+			min="0"
+			bind:value={LineItem.quantity}
+		/>
 	</div>
 
 	<div>
-		<input class="line-item text-right" type="number" name="amount" step="0.01" min="0" />
+		<input
+			class="line-item text-right"
+			type="number"
+			name="amount"
+			step="0.01"
+			min="0"
+			bind:value={amount}
+			disabled
+		/>
 	</div>
 
 	<div>
-		<button
-			class="center h-10 w-10 text-pastelPurple hover:text-lavenderIndigo"
-			on:click|preventDefault={() => dispatch('removeLineItem', LineItem.Id)}><Trash /></button
-		>
+		{#if canDelete}
+			<button
+				class="center h-10 w-10 text-pastelPurple hover:text-lavenderIndigo"
+				on:click|preventDefault={() => dispatch('removeLineItem', LineItem.Id)}><Trash /></button
+			>
+		{/if}
 	</div>
 </div>
 
@@ -49,5 +86,10 @@
 	input[type='text']:focus,
 	input[type='number']:focus {
 		@apply border-solid border-lavenderIndigo outline-none;
+	}
+
+	input[type='number']:disabled,
+	input[type='text']:disabled {
+		@apply border-b-0 bg-transparent px-0;
 	}
 </style>

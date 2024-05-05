@@ -11,7 +11,8 @@
 		quantity: 0
 	};
 
-	let lineItems: lineItems[] = [blankLineItem];
+	// a copy of the blankLineItem is passed so that the data binding does not update the original object itself
+	let lineItems: lineItems[] = [{ ...blankLineItem }];
 
 	function AddLineItem() {
 		lineItems.push({ ...blankLineItem, Id: uuidv4() });
@@ -30,7 +31,7 @@
 	<!-- client -->
 	<div class="field col-span-2">
 		<label for="client">Client</label>
-		<select name="client" id="client">
+		<select name="client" id="client" class="bg-white">
 			<option value="Zeak">ZEAL</option>
 		</select>
 	</div>
