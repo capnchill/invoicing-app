@@ -23,6 +23,10 @@
 		lineItems = lineItems.filter((item) => item.Id !== event.detail);
 		console.log('remove line item');
 	}
+
+	function UpdateLineItem() {
+		lineItems = lineItems;
+	}
 </script>
 
 <h2 class="mb-7 font-sansSerif text-3xl font-bold text-daisyBush">Add an Invoice</h2>
@@ -67,7 +71,12 @@
 
 	<!-- invoice items table -->
 	<div class="field col-span-6">
-		<LineItemsRow {lineItems} on:addLineItem={AddLineItem} on:removeLineItem={RemoveLineItem} />
+		<LineItemsRow
+			{lineItems}
+			on:addLineItem={AddLineItem}
+			on:removeLineItem={RemoveLineItem}
+			on:updateLineItem={UpdateLineItem}
+		/>
 	</div>
 
 	<!-- Notes -->

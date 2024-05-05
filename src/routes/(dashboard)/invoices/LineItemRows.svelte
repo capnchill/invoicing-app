@@ -3,10 +3,28 @@
 	import CircledAmount from '$lib/components/CircledAmount.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import LineItemRow from './LineItemRow.svelte';
+	import { centsToDollars, sumLineItems, twoDecimals } from '$lib/utils/moneyHelper';
 
 	export let lineItems: lineItems[] | undefined = undefined;
 
 	let dispatch = createEventDispatcher();
+
+	let subtotal = '0.00';
+	let discount: number;
+	let discountedAmount: string = '0.00';
+	let Total: string = '0.00';
+
+	$: {
+		if (sumLineItems(lineItems) > 0) {
+			subtotal = centsToDollars(sumLineItems(lineItems));
+		}
+
+		if (subtotal && discount) {
+			discountedAmount = centsToDollars(sumLineItems(lineItems) * (discount / 100));
+		}
+
+		Total = twoDecimals(parseInt(subtotal) - parseInt(discountedAmount));
+	}
 </script>
 
 <div class="invoice-line-item border-b-2 border-daisyBush pb-2">
@@ -18,7 +36,7 @@
 
 {#if lineItems}
 	{#each lineItems as LineItem, index}
-		<LineItemRow {LineItem} on:removeLineItem canDelete={index > 0} />
+		<LineItemRow {LineItem} on:removeLineItem canDelete={index > 0} on:updateLineItem />
 	{/each}
 {/if}
 
@@ -33,7 +51,7 @@
 	</div>
 
 	<div class="py-5 text-right font-bold text-monsoon">Subtotal</div>
-	<div class="py-5 text-right font-mono">$250.00</div>
+	<div class="py-5 text-right font-mono">${subtotal}</div>
 </div>
 
 <div class="invoice-line-item">
@@ -45,14 +63,15 @@
 			name="discount"
 			min="0"
 			max="100"
+			bind:value={discount}
 		/>
 		<span class="absolute right-0 top-2 font-mono">%</span>
 	</div>
-	<div class="py-5 text-right font-mono">$10.00</div>
+	<div class="py-5 text-right font-mono">{discountedAmount}</div>
 </div>
 
 <div class="invoice-line-item">
-	<div class="col-span-6"><CircledAmount label="Total" amount="$1000.00" /></div>
+	<div class="col-span-6"><CircledAmount label="Total" amount={`${Total}`} /></div>
 </div>
 
 <style lang="postcss">
