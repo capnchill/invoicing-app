@@ -13,6 +13,13 @@ export function addInvoice(invoiceToAdd: Invoice) {
 	return invoiceToAdd;
 }
 
+export function updateInvoice(invoiceToUpdate: Invoice) {
+	invoices.update((prev: Invoice[]) =>
+		prev.map((curr) => (curr.id === invoiceToUpdate.id ? invoiceToUpdate : curr))
+	);
+	return invoiceToUpdate;
+}
+
 export function deleteInvoice(invoiceToDelete: Invoice) {
 	invoices.update((prev: Invoice[]) => prev.filter((invoice) => invoice.id !== invoiceToDelete.id));
 

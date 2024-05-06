@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ConfirmDelete from './ConfirmDelete.svelte';
 	import View from '$lib/components/Icon/View.svelte';
 	import ThreeDots from '$lib/components/Icon/ThreeDots.svelte';
 	import Tag from '$lib/components/Tag.svelte';
@@ -8,14 +9,14 @@
 	import Send from '$lib/components/Icon/Send.svelte';
 	import Edit from '$lib/components/Icon/Edit.svelte';
 	import Trash from '$lib/components/Icon/Trash.svelte';
-	import Modal from '$lib/components/Modal.svelte';
-	import Button from '$lib/components/Button.svelte';
-	import { deleteInvoice } from '$lib/stores/InvoiceStore';
+	import SlidePanel from '$lib/components/SlidePanel.svelte';
+	import InvoiceForm from './InvoiceForm.svelte';
 
 	export let invoice: Invoice;
 	let isAdditionalMenuShowing = false;
 	let isOptionsDisabled = false;
 	let isModalShowing = false;
+	let isInvoiceShowing = false;
 
 	function handleDelete() {
 		console.log('deleting invoice');
@@ -25,12 +26,12 @@
 
 	function handleEdit() {
 		console.log('editing invoice');
-		isModalShowing = true;
+		isInvoiceShowing = true;
+		isAdditionalMenuShowing = false;
 	}
 
 	function handleSendInvoice() {
 		console.log('sending invoice');
-		isModalShowing = true;
 	}
 
 	function getInvoiceLabel() {
@@ -83,33 +84,17 @@
 	</div>
 </div>
 
-<Modal isVisible={isModalShowing} on:close={() => (isModalShowing = false)}>
-	<div class="flex h-full min-h-[175px] flex-col items-center justify-between gap-6">
-		<div class="text-center text-xl font-bold text-daisyBush">
-			Are you sure you want to delete this invoice to
-			<span class="text-scarlet">{invoice.client.name}</span> for
-			<span class="text-scarlet">${centsToDollars(sumLineItems(invoice.lineItems))}</span>
-			?
-		</div>
-		<div class="flex gap-4">
-			<Button
-				label="Cancel"
-				onClick={() => (isModalShowing = false)}
-				isAnimated={false}
-				style="secondary"
-			/>
-			<Button
-				label="Yes, Delete it"
-				onClick={() => {
-					deleteInvoice(invoice);
-					isModalShowing = false;
-				}}
-				isAnimated={false}
-				style="destructive"
-			/>
-		</div>
-	</div>
-</Modal>
+<ConfirmDelete {invoice} {isModalShowing} on:close={() => (isModalShowing = false)} />
+
+{#if isInvoiceShowing}
+	<SlidePanel on:closePanel={() => (isInvoiceShowing = false)}
+		><InvoiceForm
+			formState="edit"
+			{invoice}
+			closePanel={() => (isInvoiceShowing = false)}
+		/></SlidePanel
+	>
+{/if}
 
 <style lang="postcss">
 	.invoice-row {
