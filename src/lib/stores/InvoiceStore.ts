@@ -8,6 +8,11 @@ export function loadInvoices() {
 	// invoices.set([]);
 }
 
+export function addInvoice(invoiceToAdd: Invoice) {
+	invoices.update((prev: Invoice[]) => [...prev, invoiceToAdd]);
+	return invoiceToAdd;
+}
+
 export function deleteInvoice(invoiceToDelete: Invoice) {
 	invoices.update((prev: Invoice[]) => prev.filter((invoice) => invoice.id !== invoiceToDelete.id));
 

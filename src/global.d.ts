@@ -1,30 +1,31 @@
 type Invoice = {
 	id: string;
-	client: client;
+	client: Client;
 	createdAt: string;
+	discount?: number;
 	dueDate: string;
 	invoiceNumber: string;
 	invoiceStatus: InvoiceStatus;
 	issueDate: string;
-	lineItems?: lineItems[];
+	lineItems?: LineItem[];
 	notes?: string;
 	subject?: string;
 	terms?: string;
 };
 
-type client = {
+type Client = {
 	id: string;
-	clientStatus: ClientStatus;
-	city: string;
+	clientStatus?: ClientStatus;
+	city?: string;
 	email: string;
 	name: string;
-	state: string;
-	street: string;
-	zipCode: string;
+	state?: string;
+	street?: string;
+	zipCode?: string;
 };
 
-type lineItems = {
-	Id: string;
+type LineItem = {
+	id: string;
 	amount: number;
 	description: string;
 	quantity: number;

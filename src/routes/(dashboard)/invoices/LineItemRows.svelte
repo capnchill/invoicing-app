@@ -5,12 +5,12 @@
 	import LineItemRow from './LineItemRow.svelte';
 	import { centsToDollars, sumLineItems, twoDecimals } from '$lib/utils/moneyHelper';
 
-	export let lineItems: lineItems[] | undefined = undefined;
+	export let lineItems: LineItem[] | undefined = undefined;
 
 	let dispatch = createEventDispatcher();
 
 	let subtotal = '0.00';
-	let discount: number;
+	export let discount: number = 0;
 	let discountedAmount: string = '0.00';
 	let Total: string = '0.00';
 
@@ -23,7 +23,7 @@
 			discountedAmount = centsToDollars(sumLineItems(lineItems) * (discount / 100));
 		}
 
-		Total = twoDecimals(parseInt(subtotal) - parseInt(discountedAmount));
+		Total = twoDecimals(Number(subtotal) - Number(discountedAmount));
 	}
 </script>
 

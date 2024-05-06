@@ -3,7 +3,7 @@
 	import { twoDecimals, dollarsToCents } from '$lib/utils/moneyHelper';
 	import { createEventDispatcher } from 'svelte';
 
-	export let LineItem: lineItems;
+	export let LineItem: LineItem;
 	export let canDelete: boolean = false;
 	export let isRequired: boolean = false;
 
@@ -77,7 +77,7 @@
 		{#if canDelete}
 			<button
 				class="center h-10 w-10 text-pastelPurple hover:text-lavenderIndigo"
-				on:click|preventDefault={() => dispatch('removeLineItem', LineItem.Id)}><Trash /></button
+				on:click|preventDefault={() => dispatch('removeLineItem', LineItem.id)}><Trash /></button
 			>
 		{/if}
 	</div>

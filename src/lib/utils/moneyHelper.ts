@@ -1,10 +1,10 @@
 /**
  * Takes all the line items and adds them up
  *
- * @param {lineItems[] | undefined} lineItems - The array of line items to sum.
+ * @param {LineItem[] | undefined} lineItems - The array of line items to sum.
  * @return {number} The total sum of the amounts in the line items.
  */
-export function sumLineItems(lineItems: lineItems[] | undefined): number {
+export function sumLineItems(lineItems: LineItem[] | undefined): number {
 	if (!lineItems) {
 		return 0;
 	}
