@@ -49,6 +49,14 @@
 	}
 </script>
 
+<svelte:window
+	on:keydown={(event) => {
+		if (event.key === 'Escape') {
+			isAdditionalMenuShowing = false;
+		}
+	}}
+/>
+
 <div
 	class="invoice-table invoice-row items-center rounded-lg bg-white py-3 shadow-tableRow lg:py-6"
 >
