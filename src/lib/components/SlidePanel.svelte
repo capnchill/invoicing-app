@@ -20,7 +20,8 @@
 	<Overlay />
 
 	<div
-		class="fixed right-0 top-0 z-slidePanel h-full w-3/4 overflow-y-scroll bg-white px-32 py-20 shadow-slidePanel"
+		class="fixed right-0 top-0 z-slidePanel h-full w-full overflow-y-scroll bg-white px-5 pt-16 shadow-slidePanel lg:w-3/4 lg:px-32
+		lg:py-20"
 	>
 		<div class="absolute left-7 top-5 text-pastelPurple hover:text-daisyBush">
 			<button on:click={() => dispatch('closePanel')}>

@@ -18,7 +18,7 @@
 </svelte:head>
 
 <button
-	class="fixed right-6 top-6 z-10 md:hidden"
+	class="fixed right-6 top-6 z-navBarToggle md:hidden"
 	class:text-goldenFizz={isNavShowing}
 	class:text-daisyBush={!isNavShowing}
 	on:click={() => {
@@ -33,10 +33,10 @@
 </button>
 
 <header
-	class="fixed h-screen w-full -translate-x-full bg-daisyBush text-center transition-transform md:relative md:col-span-3 md:h-full md:translate-x-0"
+	class="fixed z-navBar h-screen w-full -translate-x-full bg-daisyBush text-center transition-transform md:relative md:col-span-3 md:h-full md:translate-x-0"
 	class:translate-x-0={isNavShowing}
 >
-	<div class="my-10 md:mb-24">
+	<div class=" my-10 md:mb-24">
 		<a href="/invoices"><img src="/images/logo.svg" alt="logo" class="mx-auto" /></a>
 	</div>
 
