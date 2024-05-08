@@ -12,6 +12,26 @@ export function sumLineItems(lineItems: LineItem[] | undefined): number {
 }
 
 /**
+ * Calculates the total invoice amount based on line items and discount.
+ *
+ * @param {LineItem[] | undefined} lineItems - The array of line items for the invoice.
+ * @param {number | undefined} discount - The discount percentage to apply to the invoice.
+ * @return {number} The total invoice amount after applying the discount.
+ */
+export function invoiceTotal(
+	lineItems: LineItem[] | undefined,
+	discount: number | undefined
+): number {
+	const lineItemsSum = sumLineItems(lineItems);
+	if (discount) {
+		const invoiceDiscount = lineItemsSum * (discount / 100);
+		return lineItemsSum - invoiceDiscount;
+	} else {
+		return lineItemsSum;
+	}
+}
+
+/**
  * Converts a number to a string with two decimal places.
  *
  * @param {number} myNum - The number to be converted.

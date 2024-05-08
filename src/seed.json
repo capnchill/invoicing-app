@@ -12,6 +12,7 @@
           "zip": "12345"
         },
         "createdAt": "2022-07-01",
+        "discount": 30,
         "dueDate": "2024-07-31",
         "id": "1",
         "invoiceNumber": "12345",
@@ -47,6 +48,7 @@
           "zip": "12345"
         },
         "createdAt": "2022-07-01",
+        "discount": 0,
         "dueDate": "2022-07-06",
         "id": "2",
         "invoiceNumber": "12352",
@@ -79,6 +81,7 @@
           "zip": "98765"
         },
         "createdAt": "2022-07-01",
+        "discount": 0,
         "dueDate": "2022-10-06",
         "id": "6",
         "invoiceNumber": "12346",
@@ -111,6 +114,7 @@
           "zip": "56789"
         },
         "createdAt": "2022-07-01",
+        "discount": 0,
         "dueDate": "2024-06-06",
         "id": "7",
         "invoiceNumber": "12347",
@@ -137,6 +141,7 @@
           "zip": "56789"
         },
         "createdAt": "2022-07-06",
+        "discount": 0,
         "dueDate": "2022-10-06",
         "id": "5",
         "invoiceNumber": "12348",

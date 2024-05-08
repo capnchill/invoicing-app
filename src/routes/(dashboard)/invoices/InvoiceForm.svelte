@@ -5,10 +5,10 @@
 	import LineItemRows from './LineItemRows.svelte';
 	import { v4 as uuidv4 } from 'uuid';
 	import { states } from '$lib/utils/states';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { loadClients, clients, addClient } from '$lib/stores/ClientStore';
 	import { today } from '$lib/utils/datesHelpers';
-	import { addInvoice, updateInvoice } from '$lib/stores/InvoiceStore';
+	import { addInvoice, updateInvoice, invoices } from '$lib/stores/InvoiceStore';
 	import ConfirmDelete from './ConfirmDelete.svelte';
 
 	const blankLineItem = {
@@ -30,6 +30,8 @@
 	export let closePanel: () => void = () => {};
 
 	let isModalShowing = false;
+
+	const intialDiscount = invoice.discount || 0;
 
 	let isNewClient = false;
 
@@ -60,6 +62,10 @@
 		}
 
 		closePanel();
+	}
+
+	function UpdateDiscount(event: CustomEvent) {
+		invoice.discount = event.detail.discount;
 	}
 
 	onMount(() => {
@@ -221,6 +227,7 @@
 			on:addLineItem={AddLineItem}
 			on:removeLineItem={RemoveLineItem}
 			on:updateLineItem={UpdateLineItem}
+			on:updateDiscount={UpdateDiscount}
 		/>
 	</div>
 

@@ -1,9 +1,10 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
 	import CircledAmount from '$lib/components/CircledAmount.svelte';
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import LineItemRow from './LineItemRow.svelte';
 	import { centsToDollars, sumLineItems, twoDecimals } from '$lib/utils/moneyHelper';
+	import { invoices } from '$lib/stores/InvoiceStore';
 
 	export let lineItems: LineItem[] | undefined = undefined;
 
@@ -70,6 +71,7 @@
 			min="0"
 			max="100"
 			bind:value={discount}
+			on:change={() => dispatch('updateDiscount', { discount })}
 		/>
 		<span class="absolute right-0 top-2 font-mono">%</span>
 	</div>

@@ -3,7 +3,7 @@
 	import View from '$lib/components/Icon/View.svelte';
 	import ThreeDots from '$lib/components/Icon/ThreeDots.svelte';
 	import Tag from '$lib/components/Tag.svelte';
-	import { centsToDollars, sumLineItems } from '$lib/utils/moneyHelper';
+	import { centsToDollars, invoiceTotal, sumLineItems } from '$lib/utils/moneyHelper';
 	import { convertDate, isLate } from '$lib/utils/datesHelpers';
 	import AdditionalOptions from '$lib/components/AdditionalOptions.svelte';
 	import Send from '$lib/components/Icon/Send.svelte';
@@ -25,7 +25,6 @@
 	}
 
 	function handleEdit() {
-		console.log('editing invoice');
 		isInvoiceShowing = true;
 		isAdditionalMenuShowing = false;
 	}
@@ -62,7 +61,7 @@
 		{invoice.client.name}
 	</div>
 	<div class="amount text-right font-mono text-sm font-bold lg:text-lg">
-		${centsToDollars(sumLineItems(invoice.lineItems))}
+		${centsToDollars(invoiceTotal(invoice.lineItems, invoice.discount))}
 	</div>
 	<div class="center viewButton text-sm lg:flex lg:text-lg">
 		<a href="#" class="hidden text-pastelPurple hover:bg-daisyBush lg:block"><View /></a>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Trash from '$lib/components/Icon/Trash.svelte';
-	import { twoDecimals, dollarsToCents } from '$lib/utils/moneyHelper';
+	import { twoDecimals, dollarsToCents, centsToDollars } from '$lib/utils/moneyHelper';
 	import { createEventDispatcher } from 'svelte';
 
 	export let LineItem: LineItem;
@@ -9,7 +9,7 @@
 
 	let dispatch = createEventDispatcher();
 
-	let unitPrice = twoDecimals(LineItem.amount / LineItem.quantity);
+	let unitPrice = centsToDollars(LineItem.amount / LineItem.quantity);
 	let amount = twoDecimals(LineItem.amount);
 
 	// the reactive block is the same as useEffect() hook in react
