@@ -1,16 +1,17 @@
 <script lang="ts">
 	import Trash from '$lib/components/Icon/Trash.svelte';
-	import { twoDecimals, dollarsToCents, centsToDollars } from '$lib/utils/moneyHelper';
+	import { twoDecimals, dollarsToCents, centsToDollarsWithoutCommas } from '$lib/utils/moneyHelper';
 	import { createEventDispatcher } from 'svelte';
 
 	export let LineItem: LineItem;
 	export let canDelete: boolean = false;
 	export let isRequired: boolean = false;
+	export let isEditable = true;
 
 	let dispatch = createEventDispatcher();
 
-	let unitPrice = centsToDollars(LineItem.amount / LineItem.quantity);
-	let amount = twoDecimals(LineItem.amount);
+	let unitPrice = centsToDollarsWithoutCommas(LineItem.amount / LineItem.quantity);
+	let amount = centsToDollarsWithoutCommas(LineItem.amount);
 
 	// the reactive block is the same as useEffect() hook in react
 	$: {
@@ -28,6 +29,7 @@
 			name="description"
 			bind:value={LineItem.description}
 			required={isRequired}
+			disabled={!isEditable}
 		/>
 	</div>
 
@@ -45,6 +47,7 @@
 				dispatch('updateLineItem');
 			}}
 			required={isRequired}
+			disabled={!isEditable}
 		/>
 	</div>
 
@@ -60,6 +63,7 @@
 				dispatch('updateLineItem');
 			}}
 			required={isRequired}
+			disabled={!isEditable}
 		/>
 	</div>
 
@@ -78,7 +82,7 @@
 	</div>
 
 	<div class="trash">
-		{#if canDelete}
+		{#if canDelete && isEditable}
 			<button
 				class="center h-10 w-10 text-pastelPurple hover:text-lavenderIndigo"
 				on:click|preventDefault={() => dispatch('removeLineItem', LineItem.id)}><Trash /></button

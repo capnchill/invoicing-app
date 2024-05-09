@@ -53,6 +53,17 @@ export function centsToDollars(cents: number): string {
 }
 
 /**
+ * Converts a number of cents to a string representation of dollars without commas.
+ *
+ * @param {number} cents - The number of cents to be converted.
+ * @return {string} The string representation of the converted dollars without commas.
+ */
+export function centsToDollarsWithoutCommas(cents: number): string {
+	const dollars = cents / 100;
+	return twoDecimals(dollars);
+}
+
+/**
  * Converts the given amount of dollars to the corresponding number of cents.
  *
  * @param {number} dollars - The amount of dollars to be converted.

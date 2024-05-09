@@ -3,9 +3,15 @@
 	import CircledAmount from '$lib/components/CircledAmount.svelte';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import LineItemRow from './LineItemRow.svelte';
-	import { centsToDollars, sumLineItems, twoDecimals } from '$lib/utils/moneyHelper';
+	import {
+		centsToDollars,
+		sumLineItems,
+		twoDecimals,
+		addThousandsSeparator
+	} from '$lib/utils/moneyHelper';
 
 	export let lineItems: LineItem[] | undefined = undefined;
+	export let isEditable = true;
 
 	let dispatch = createEventDispatcher();
 
@@ -22,8 +28,11 @@
 		if (subtotal && discount) {
 			discountedAmount = centsToDollars(sumLineItems(lineItems) * (discount / 100));
 		}
+	}
 
-		Total = twoDecimals(Number(subtotal) - Number(discountedAmount));
+	$: {
+		const plainSubtotal = subtotal.replace(',', '');
+		Total = addThousandsSeparator(twoDecimals(Number(plainSubtotal) - Number(discountedAmount)));
 	}
 </script>
 
@@ -42,18 +51,21 @@
 			canDelete={index > 0}
 			on:updateLineItem
 			isRequired={index === 0}
+			{isEditable}
 		/>
 	{/each}
 {/if}
 
 <div class="invoice-line-item">
 	<div class="col-span-1 sm:col-span-2">
-		<Button
-			label="+ Line Item"
-			style="textOnly"
-			onClick={() => dispatch('addLineItem')}
-			isAnimated={false}
-		/>
+		{#if isEditable}
+			<Button
+				label="+ Line Item"
+				style="textOnly"
+				onClick={() => dispatch('addLineItem')}
+				isAnimated={false}
+			/>
+		{/if}
 	</div>
 
 	<div class="py-5 text-right font-bold text-monsoon">Subtotal</div>
@@ -69,6 +81,7 @@
 			name="discount"
 			min="0"
 			max="100"
+			disabled={!isEditable}
 			bind:value={discount}
 			on:change={() => dispatch('updateDiscount', { discount })}
 		/>

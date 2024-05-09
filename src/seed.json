@@ -6,7 +6,7 @@
           "clientStatus": "active",
           "email": "acme@example.com",
           "id": "1",
-          "name": "acme inc",
+          "name": "Acme Inc.",
           "state": "TN",
           "street": "123 Main Street",
           "zip": "12345"
@@ -42,7 +42,7 @@
           "clientStatus": "active",
           "email": "acme@example.com",
           "id": "1",
-          "name": "acme inc",
+          "name": "Acme Inc.",
           "state": "TN",
           "street": "123 Main Street",
           "zip": "12345"
