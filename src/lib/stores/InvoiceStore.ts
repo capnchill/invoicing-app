@@ -26,3 +26,7 @@ export function deleteInvoice(invoiceToDelete: Invoice) {
 	return invoiceToDelete;
 	// the same invoice is returned that was passed in so that we can show the invoice in toasters, success messages
 }
+
+export function getInvoiceById(id: string) {
+	return data.invoices.find((invoice) => invoice.id === id);
+}
