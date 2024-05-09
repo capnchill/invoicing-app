@@ -54,7 +54,8 @@ export default {
 				slidePanel: 997,
 				overlay: 996,
 				navBarToggle: 91,
-				navBar: 90
+				navBar: 90,
+				toaster: 1000
 			}
 		}
 	},

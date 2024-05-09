@@ -30,3 +30,11 @@ type LineItem = {
 	description: string;
 	quantity: number;
 };
+
+type NotificationType = 'success' | 'error' | 'info' | 'warning';
+
+type Snackbar = {
+	id: string;
+	message: string;
+	type: NotificationType;
+};
