@@ -68,12 +68,14 @@
 		{/if}
 	</div>
 
-	<div class="py-5 text-right font-bold text-monsoon">Subtotal</div>
+	<div class="py-5 text-right font-bold text-monsoon print:col-span-3">Subtotal</div>
 	<div class="py-5 text-right font-mono">${subtotal}</div>
 </div>
 
 <div class="invoice-line-item">
-	<div class="col-span-1 py-5 text-right font-bold text-monsoon sm:col-span-2">Discount</div>
+	<div class="col-span-1 py-5 text-right font-bold text-monsoon sm:col-span-2 print:col-span-3">
+		Discount
+	</div>
 	<div class="relative">
 		<input
 			class="line-item h-10 w-full border-b-2 border-dashed border-stone-300 pr-4 text-right focus:border-solid focus:border-lavenderIndigo focus:outline-none"
@@ -87,17 +89,17 @@
 		/>
 		<span class="absolute right-0 top-2 font-mono">%</span>
 	</div>
-	<div class="py-5 text-right font-mono">{discountedAmount}</div>
+	<div class="py-5 text-right font-mono print:pr-0">{discountedAmount}</div>
 </div>
 
 <div class="invoice-line-item">
-	<div class="col-span-3 sm:col-span-6">
+	<div class="col-span-3 sm:col-span-6 print:col-span-6">
 		<CircledAmount label="Total" amount={`${Total}`} />
 	</div>
 </div>
 
 <style lang="postcss">
 	.table-header {
-		@apply hidden text-sm font-bold text-daisyBush sm:block;
+		@apply hidden text-sm font-bold text-daisyBush sm:block print:block;
 	}
 </style>
