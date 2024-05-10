@@ -10,7 +10,7 @@
 	export let data: { invoice: Invoice };
 
 	function printInvoice() {
-		console.log('printing invoice');
+		window.print();
 	}
 
 	function copyLink() {
