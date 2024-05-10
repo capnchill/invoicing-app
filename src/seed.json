@@ -186,5 +186,13 @@
         "state": "TN",
         "zip": "87654"
       }
-    ]
+    ],
+    "settings": {
+        "myName": "Subodh",
+        "email": "acme@example.com",
+        "street": "123 Awesome Street",
+        "city": "Coolville",
+        "state": "TN",
+        "zip": "54321"
+    }
   }

@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { loadSettings, settings } from '$lib/stores/Settings';
+
 	import Button from '$lib/components/Button.svelte';
 	import { convertDate } from '$lib/utils/datesHelpers.js';
-	import { invoiceTotal } from '$lib/utils/moneyHelper';
 	import LineItemRows from '../LineItemRows.svelte';
+	import { onMount } from 'svelte';
 
 	export let data: { invoice: Invoice };
 
@@ -21,6 +23,10 @@
 	function sendInvoice() {
 		console.log('send invoice');
 	}
+
+	onMount(() => {
+		loadSettings();
+	});
 </script>
 
 <div class="fixed z-0 mb-16 flex w-full max-w-screen-lg justify-between">
@@ -48,11 +54,22 @@
 
 	<div class="col-span-2 col-start-5 pt-4">
 		<div class="label">From</div>
-		<p>
-			Subodh Chilwal <br />
-			123 Impressive Street <br />
-			Awesome country, DL 54321
-		</p>
+		{#if $settings && $settings.myName}
+			<p>
+				{$settings.myName} <br />
+				{#if $settings.street && $settings.state && $settings.zip && $settings.city}
+					{$settings.street} <br />
+					{$settings.city}, {$settings.state}
+					{$settings.zip}
+				{/if}
+			</p>
+		{:else}
+			<div class="center min-h-[68px] rounded bg-gallery">
+				<a href="/settings" class="text-stone-600 underline hover:no-underline"
+					>Add your contact information</a
+				>
+			</div>
+		{/if}
 	</div>
 
 	<div class="col-span-3">
