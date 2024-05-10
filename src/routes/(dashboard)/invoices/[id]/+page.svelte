@@ -97,7 +97,7 @@
 		</p>
 	</div>
 
-	<div class="col-span-6 sm:col-start-5">
+	<div class="col-span-6 sm:col-span-2 sm:col-start-5">
 		<div class="label">Invoice ID</div>
 		<p>{data.invoice.invoiceNumber}</p>
 	</div>
