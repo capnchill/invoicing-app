@@ -3,6 +3,7 @@
 
 	export let label: string;
 	export let onClick: () => void;
+	export let className = '';
 
 	export let style:
 		| 'primary'
@@ -18,7 +19,7 @@
 </script>
 
 <button
-	class="button"
+	class={`button ${className}`}
 	on:click|preventDefault={() => onClick()}
 	class:isAnimated
 	class:primary={style === 'primary'}

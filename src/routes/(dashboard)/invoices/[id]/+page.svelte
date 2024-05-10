@@ -3,18 +3,23 @@
 	import { onMount } from 'svelte';
 	import { convertDate } from '$lib/utils/datesHelpers.js';
 	import SvelteMarkdown from 'svelte-markdown';
+	import { page } from '$app/stores';
 
 	import Button from '$lib/components/Button.svelte';
 	import LineItemRows from '../LineItemRows.svelte';
 
 	export let data: { invoice: Invoice };
 
+	let copyLinkLabel: 'Copy Link' | 'Copied!' = 'Copy Link';
+
 	function printInvoice() {
 		window.print();
 	}
 
 	function copyLink() {
-		console.log('copy link');
+		navigator.clipboard.writeText($page.url.href);
+		copyLinkLabel = 'Copied!';
+		setTimeout(() => (copyLinkLabel = 'Copy Link'), 1250);
 	}
 
 	function payInvoice() {
@@ -40,7 +45,13 @@
 			isAnimated={false}
 			height="short"
 		/>
-		<Button label="Copy Link" style="primary" onClick={copyLink} height="short" />
+		<Button
+			label={copyLinkLabel}
+			style="primary"
+			onClick={copyLink}
+			height="short"
+			className="min-w-[168px] justify-center"
+		/>
 		<Button label="Pay Invoice" style="primary" onClick={payInvoice} height="short" />
 		<Button label="Send Invoice" style="primary" onClick={sendInvoice} height="short" />
 	</div>
