@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { loadSettings, settings } from '$lib/stores/Settings';
+	import { onMount } from 'svelte';
+	import { convertDate } from '$lib/utils/datesHelpers.js';
+	import SvelteMarkdown from 'svelte-markdown';
 
 	import Button from '$lib/components/Button.svelte';
-	import { convertDate } from '$lib/utils/datesHelpers.js';
 	import LineItemRows from '../LineItemRows.svelte';
-	import { onMount } from 'svelte';
 
 	export let data: { invoice: Invoice };
 
@@ -115,18 +116,14 @@
 	{#if data.invoice.notes}
 		<div class="col-span-6">
 			<div class="label">Notes</div>
-			<p>
-				{data.invoice.notes}
-			</p>
+			<SvelteMarkdown source={data.invoice.notes} />
 		</div>
 	{/if}
 
 	{#if data.invoice.terms}
 		<div class="col-span-6">
 			<div class="label">Terms and Conditions</div>
-			<p>
-				{data.invoice.terms}
-			</p>
+			<SvelteMarkdown source={data.invoice.terms} />
 		</div>
 	{/if}
 </div>
