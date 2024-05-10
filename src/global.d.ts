@@ -22,6 +22,7 @@ type Client = {
 	state?: string;
 	street?: string;
 	zipCode?: string;
+	clientStatus: string;
 };
 
 type LineItem = {

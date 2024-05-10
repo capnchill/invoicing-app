@@ -38,9 +38,9 @@
 
 <div class="invoice-line-item border-b-2 border-daisyBush pb-2">
 	<div class="table-header">Description</div>
-	<div class="table-header">Unit Price</div>
-	<div class="table-header">Qty</div>
-	<div class="table-header">Amount</div>
+	<div class="table-header text-right">Unit Price</div>
+	<div class="table-header text-center">Qty</div>
+	<div class="table-header text-right">Amount</div>
 </div>
 
 {#if lineItems}

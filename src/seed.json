@@ -166,7 +166,8 @@
         "id": "1",
         "name": "Compressed.fm",
         "state": "TN",
-        "zip": "12345"
+        "zip": "12345",
+        "clientStatus": "active"
       },
       {
         "address": "456 Drive",
@@ -175,7 +176,8 @@
         "id": "2",
         "name": "Everything Svelte",
         "state": "TN",
-        "zip": "67890"
+        "zip": "67890",
+        "clientStatus": "archive"
       },
       {
         "address": "789 Boulevard",
@@ -184,7 +186,8 @@
         "id": "3",
         "name": "ZEAL",
         "state": "TN",
-        "zip": "87654"
+        "zip": "87654",
+        "clientStatus": "active"
       }
     ],
     "settings": {
