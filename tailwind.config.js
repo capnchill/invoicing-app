@@ -9,10 +9,11 @@ export default {
 		},
 		extend: {
 			backgroundImage: {
-				arrowLeftUp: 'url(/images/arrow-left-up.svg)',
-				arrowRightUp: 'url(/images/arrow-right-up.svg)',
+				arrowLeftUp: "url('/images/arrow-left-up.svg')",
+				arrowRightUp: "url('/images/arrow-right-up.svg')",
 				chevronDown: "url('/images/chevron--down.svg')",
-				circle: "url('/images/circle.svg')"
+				circle: "url('/images/circle.svg')",
+				thankYou: "url('/images/bg-thankYou.svg)"
 			},
 			backgroundPosition: {
 				'right-center': '97% center'
