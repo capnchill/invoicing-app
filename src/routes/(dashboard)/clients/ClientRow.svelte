@@ -26,28 +26,32 @@
 />
 
 <div
-	class="client-table grid grid-cols-clientTableMobile items-center rounded-lg py-3 shadow-tableRow lg:grid-cols-clientTable lg:py-6"
+	class="client-table client-row grid grid-cols-clientTableMobile items-center rounded-lg py-3 shadow-tableRow lg:grid-cols-clientTable lg:py-6"
 >
-	<div>
+	<div class="status">
 		<Tag label={client.clientStatus} />
 	</div>
 
 	<!-- Client Name -->
-	<div class="truncate whitespace-nowrap text-base font-bold lg:text-xl">{client.name}</div>
+	<div class="clientName truncate whitespace-nowrap text-base font-bold lg:text-xl">
+		{client.name}
+	</div>
 
 	<!-- Amount Received -->
-	<div class="text-right font-mono text-sm font-bold lg:text-lg">$504.00</div>
+	<div class="received text-right font-mono text-sm font-bold lg:text-lg">$504.00</div>
 
 	<!-- Balance -->
-	<div class="text-right font-mono text-sm font-bold text-scarlet lg:text-lg">$240.00</div>
+	<div class="balance font-mono text-sm font-bold text-scarlet lg:text-right lg:text-lg">
+		$240.00
+	</div>
 
 	<!-- View -->
-	<div class="relative hidden justify-center text-pastelPurple hover:text-daisyBush lg:flex">
+	<div class="view relative hidden justify-center text-pastelPurple hover:text-daisyBush lg:flex">
 		<a href="#"><View /></a>
 	</div>
 
 	<!-- Additional Options -->
-	<div class="relative hidden justify-center lg:flex">
+	<div class="threeDots relative hidden justify-center lg:flex">
 		<button
 			class="text-pastelPurple hover:text-daisyBush"
 			on:click={() => {
@@ -90,3 +94,44 @@
 		{/if}
 	</div>
 </div>
+
+<style lang="postcss">
+	.client-row {
+		grid-template-areas:
+			'clientName status'
+			'received balance';
+	}
+
+	@media (min-width: 1024px) {
+		.client-row {
+			grid-template-areas: 'status clientName received balance view threeDots';
+		}
+	}
+
+	.clientName {
+		grid-area: clientName;
+	}
+
+	.status {
+		grid-area: status;
+	}
+
+	.received {
+		@apply text-left lg:text-right;
+		grid-area: received;
+	}
+
+	.received::before {
+		@apply block text-xs font-bold lg:hidden;
+		content: 'Received: ';
+	}
+
+	.balance {
+		grid-area: balance;
+	}
+
+	.balance::before {
+		@apply block text-xs font-bold lg:hidden;
+		content: 'balance: ';
+	}
+</style>
