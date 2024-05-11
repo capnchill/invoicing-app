@@ -7,6 +7,7 @@
 	import ClientRowHeader from './ClientRowHeader.svelte';
 	import ClientRow from './ClientRow.svelte';
 	import BlankState from '../invoices/BlankState.svelte';
+	import BlankStateClient from './BlankStateClient.svelte';
 
 	onMount(() => {
 		loadClients();
@@ -38,7 +39,7 @@
 	{#if $clients === null}
 		loading
 	{:else if $clients.length <= 0}
-		<BlankState />
+		<BlankStateClient />
 	{:else}
 		<!-- Client Header row -->
 		<ClientRowHeader />
