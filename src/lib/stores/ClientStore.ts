@@ -9,9 +9,15 @@ export function loadClients() {
 }
 
 export function addClient(clientToAdd: Client) {
-	clients.update((prev: Client[]) => [...prev, clientToAdd]);
+	clients.update((prev: Client[]) => [...prev, { ...clientToAdd, clientStatus: 'active' }]);
 }
 
 export function deleteClient(clientToDelete: Client) {
 	clients.update((clientStore) => clientStore.filter((client) => client.id !== clientToDelete.id));
+}
+
+export function updateClient(clientToUpdate: Client) {
+	clients.update((store) =>
+		store.map((client) => (client.id === clientToUpdate.id ? clientToUpdate : client))
+	);
 }

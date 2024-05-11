@@ -4,22 +4,37 @@
 	import Button from '$lib/components/Button.svelte';
 	import Trash from '$lib/components/Icon/Trash.svelte';
 	import Check from '$lib/components/Icon/Check.svelte';
-	import { addClient } from '$lib/stores/ClientStore';
+	import { addClient, updateClient } from '$lib/stores/ClientStore';
+	import { snackbar } from '$lib/stores/SnackbarStore';
+	import Snackbar from '$lib/components/Snackbar.svelte';
 
-	export let formState = 'create';
+	export let formStatus: 'create' | 'edit' = 'create';
 	export let client: Client = {} as Client;
 
-	export let closePanel: () => {};
+	export let closePanel: () => void;
 
 	function handleSubmit() {
-		console.log(client);
-		addClient(client);
+		if (formStatus === 'create') {
+			addClient(client);
+			snackbar.send({
+				message: 'Client created successfuly',
+				type: 'success'
+			});
+		} else {
+			updateClient(client);
+			snackbar.send({
+				message: 'Client updated successfuly',
+				type: 'success'
+			});
+		}
 		closePanel();
 	}
 </script>
 
+<Snackbar />
+
 <h2 class="mb-7 font-sansSerif text-3xl font-bold text-daisyBush">
-	{#if formState === 'create'}
+	{#if formStatus === 'create'}
 		Add
 	{:else}
 		Edit
@@ -63,13 +78,15 @@
 	</div>
 
 	<div class="field col-span-3">
-		<Button
-			label="Delete"
-			onClick={() => {}}
-			style="textOnlyDestructive"
-			isAnimated={false}
-			iconLeft={Trash}
-		/>
+		{#if formStatus === 'edit'}
+			<Button
+				label="Delete"
+				onClick={() => {}}
+				style="textOnlyDestructive"
+				isAnimated={false}
+				iconLeft={Trash}
+			/>
+		{/if}
 	</div>
 
 	<div class="field col-span-3 flex justify-end gap-x-5">
@@ -83,7 +100,10 @@
 		/>
 		<button
 			class="button center translate-y-0 bg-lavenderIndigo text-white shadow-colored transition-all hover:-translate-y-2 hover:shadow-coloredHover"
-			type="submit"><Check /> &nbsp Submit</button
+			type="submit"
 		>
+			<Check />
+			Submit
+		</button>
 	</div>
 </form>
