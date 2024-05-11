@@ -93,7 +93,7 @@
 			{data.invoice.client.email} <br />
 			{data.invoice.client.street} <br />
 			{data.invoice.client.city}, {data.invoice.client.state}
-			{data.invoice.client.zipCode}
+			{data.invoice.client.zip}
 		</p>
 	</div>
 

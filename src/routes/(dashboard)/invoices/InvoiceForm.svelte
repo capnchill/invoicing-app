@@ -197,7 +197,7 @@
 
 			<div class="field col-span-2">
 				<label for="zipCode">Zip Code</label>
-				<input type="text" name="zipCode" id="zipCode" bind:value={newClient.zipCode} />
+				<input type="text" name="zipCode" id="zipCode" bind:value={newClient.zip} />
 			</div>
 		</div>
 	{/if}

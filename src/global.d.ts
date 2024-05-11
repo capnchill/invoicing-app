@@ -21,8 +21,8 @@ type Client = {
 	name: string;
 	state?: string;
 	street?: string;
-	zipCode?: string;
-	clientStatus: string;
+	zip?: string;
+	invoices?: Invoice[];
 };
 
 type LineItem = {

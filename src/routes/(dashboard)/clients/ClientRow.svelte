@@ -11,10 +11,30 @@
 	import Archive from '$lib/components/Icon/Archive.svelte';
 	import Activate from '$lib/components/Icon/Activate.svelte';
 	import { deleteClient } from '$lib/stores/ClientStore';
-	import { ClientStatus } from '../../../enums';
+	import { centsToDollars, sumInvoices } from '$lib/utils/moneyHelper';
 
 	let isAdditionalMenuShowing = false;
 	export let client: Client;
+
+	// console.log(client);
+
+	function receivedInvoices() {
+		if (client?.invoices) {
+			// find invoices that have been paid
+			const paidInvoices = client.invoices.filter((invoice) => invoice.invoiceStatus === 'paid');
+			return sumInvoices(paidInvoices);
+		}
+		return 0;
+	}
+
+	function balanceInvoices() {
+		if (client?.invoices) {
+			// find invoices that have not been paid
+			const paidInvoices = client.invoices.filter((invoice) => invoice.invoiceStatus !== 'paid');
+			return sumInvoices(paidInvoices);
+		}
+		return 0;
+	}
 </script>
 
 <svelte:window
@@ -38,11 +58,13 @@
 	</div>
 
 	<!-- Amount Received -->
-	<div class="received text-right font-mono text-sm font-bold lg:text-lg">$504.00</div>
+	<div class="received text-right font-mono text-sm font-bold lg:text-lg">
+		{`$${centsToDollars(receivedInvoices())}`}
+	</div>
 
 	<!-- Balance -->
 	<div class="balance font-mono text-sm font-bold text-scarlet lg:text-right lg:text-lg">
-		$240.00
+		{`$${centsToDollars(balanceInvoices())}`}
 	</div>
 
 	<!-- View -->

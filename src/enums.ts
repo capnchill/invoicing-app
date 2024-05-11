@@ -6,5 +6,5 @@ export enum InvoiceStatus {
 
 export enum ClientStatus {
 	active = 'active',
-	achived = 'archived'
+	archived = 'archived'
 }

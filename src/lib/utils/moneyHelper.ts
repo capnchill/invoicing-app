@@ -94,6 +94,9 @@ export function sumInvoices(invoices: Invoice[] | undefined) {
 	if (!invoices) {
 		return 0;
 	} else {
-		return invoices.reduce((sum, item) => sum + sumLineItems(item.lineItems), 0);
+		return invoices.reduce((prevValue, curValue) => {
+			const invoiceSum = invoiceTotal(curValue.lineItems, curValue.discount);
+			return prevValue + invoiceSum;
+		}, 0);
 	}
 }
