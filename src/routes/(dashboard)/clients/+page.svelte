@@ -6,8 +6,15 @@
 	import Button from '$lib/components/Button.svelte';
 	import ClientRowHeader from './ClientRowHeader.svelte';
 	import ClientRow from './ClientRow.svelte';
-	import BlankState from '../invoices/BlankState.svelte';
 	import BlankStateClient from './BlankStateClient.svelte';
+	import SlidePanel from '$lib/components/SlidePanel.svelte';
+	import ClientForm from './ClientForm.svelte';
+
+	let isClientFormShowing = false;
+
+	function closePanel() {
+		isClientFormShowing = false;
+	}
 
 	onMount(() => {
 		loadClients();
@@ -30,7 +37,13 @@
 
 	<!-- new invoice button -->
 	<div>
-		<Button label="+ Clients" onClick={() => {}} isAnimated={true} />
+		<Button
+			label="+ Clients"
+			onClick={() => {
+				isClientFormShowing = true;
+			}}
+			isAnimated={true}
+		/>
 	</div>
 </div>
 
@@ -53,3 +66,9 @@
 		</div>
 	{/if}
 </div>
+
+{#if isClientFormShowing}
+	<SlidePanel on:closePanel={closePanel}>
+		<ClientForm {closePanel} />
+	</SlidePanel>
+{/if}
