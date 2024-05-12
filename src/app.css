@@ -104,6 +104,14 @@
     .field {
         @apply mb-6
     }
+
+    .auth-heading {
+        @apply mb-4 text-[2.5rem] font-bold text-goldenFizz
+    }
+
+    .auth-button {
+        @apply mt-6 min-h-[3.5rem] w-full rounded-lg bg-robinEggBlue py-3 text-xl font-bold text-daisyBush transition-all duration-200 hover:-translate-y-1 hover:shadow-lg
+    }
 }
 
 @layer utilities {
