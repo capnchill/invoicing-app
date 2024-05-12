@@ -80,7 +80,7 @@
 
 	<!-- View -->
 	<div class="view relative hidden justify-center text-pastelPurple hover:text-daisyBush lg:flex">
-		<a href="#" on:click={() => {}}><View /></a>
+		<a href="/clients/{client.id}" on:click={() => {}}><View /></a>
 	</div>
 
 	<!-- Additional Options -->

@@ -21,3 +21,7 @@ export function updateClient(clientToUpdate: Client) {
 		store.map((client) => (client.id === clientToUpdate.id ? clientToUpdate : client))
 	);
 }
+
+export function getClientById(id: string) {
+	return data.clients.find((client) => client.id === id);
+}
