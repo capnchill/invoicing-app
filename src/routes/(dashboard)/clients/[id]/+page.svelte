@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { loadInvoices } from '$lib/stores/InvoiceStore';
-	import { onMount } from 'svelte';
-
 	import InvoiceRow from '../../invoices/InvoiceRow.svelte';
 	import InvoiceRowHeader from '../../invoices/InvoiceRowHeader.svelte';
 	import { centsToDollars, sumInvoices } from '$lib/utils/moneyHelper';
+	import { isLate } from '$lib/utils/datesHelpers';
 	import BlankState from '../../invoices/BlankState.svelte';
 	import ClientForm from '../ClientForm.svelte';
 
@@ -16,7 +14,7 @@
 
 	let isClientFormShowing = false;
 	let isEditingCurrentClient = false;
-	export let data;
+	export let data: { client: Client };
 
 	function editClient() {
 		isClientFormShowing = true;
@@ -27,10 +25,45 @@
 		isClientFormShowing = false;
 	}
 
-	onMount(() => {
-		loadInvoices();
-		console.log(data.client?.invoices);
-	});
+	function getDraft(): string {
+		if (!data.client.invoices || data.client.invoices.length === 0) {
+			return '0.00';
+		}
+		const draftInvoices = data.client?.invoices.filter(
+			(invoice) => invoice.invoiceStatus === 'draft'
+		);
+		return centsToDollars(sumInvoices(draftInvoices));
+	}
+
+	function getPaid(): string {
+		if (!data.client.invoices || data.client.invoices.length === 0) {
+			return '0.00';
+		}
+		const paidInvoices = data.client?.invoices.filter(
+			(invoice) => invoice.invoiceStatus === 'paid'
+		);
+		return centsToDollars(sumInvoices(paidInvoices));
+	}
+
+	function getTotalOverdue(): string {
+		if (!data.client.invoices || data.client.invoices.length === 0) {
+			return '0.00';
+		}
+		const paidInvoices = data.client?.invoices.filter(
+			(invoice) => invoice.invoiceStatus === 'sent' && isLate(invoice.dueDate)
+		);
+		return centsToDollars(sumInvoices(paidInvoices));
+	}
+
+	function getTotalOutstanding(): string {
+		if (!data.client.invoices || data.client.invoices.length === 0) {
+			return '0.00';
+		}
+		const paidInvoices = data.client?.invoices.filter(
+			(invoice) => invoice.invoiceStatus === 'sent' && !isLate(invoice.dueDate)
+		);
+		return centsToDollars(sumInvoices(paidInvoices));
+	}
 </script>
 
 <svelte:head>
@@ -61,22 +94,22 @@
 <div class="mb-10 grid grid-cols-1 gap-4 rounded-lg bg-gallery px-10 py-7 lg:grid-cols-4">
 	<div class="summary-block">
 		<div class="label">Total Overdue</div>
-		<div class="number"><sup>$</sup>300.00</div>
+		<div class="number"><sup>$</sup>{getTotalOverdue()}</div>
 	</div>
 
 	<div class="summary-block">
 		<div class="label">Total Outstanding</div>
-		<div class="number"><sup>$</sup>300.00</div>
+		<div class="number"><sup>$</sup>{getTotalOutstanding()}</div>
 	</div>
 
 	<div class="summary-block">
 		<div class="label">Total Draft</div>
-		<div class="number"><sup>$</sup>300.00</div>
+		<div class="number"><sup>$</sup>{getDraft()}</div>
 	</div>
 
 	<div class="summary-block">
 		<div class="label">Total Paid</div>
-		<div class="number"><sup>$</sup>300.00</div>
+		<div class="number"><sup>$</sup>{getPaid()}</div>
 	</div>
 </div>
 
