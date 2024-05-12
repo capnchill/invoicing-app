@@ -13,6 +13,7 @@
 	import InvoiceForm from './InvoiceForm.svelte';
 
 	import { clickOutside } from '$lib/actions/ClickOutside';
+	import { swipe } from '$lib/actions/Swipe';
 
 	export let invoice: Invoice;
 	let isAdditionalMenuShowing = false;
@@ -61,6 +62,7 @@
 
 <div
 	class="invoice-table invoice-row items-center rounded-lg bg-white py-3 shadow-tableRow lg:py-6"
+	use:swipe
 >
 	<div class="status">
 		<Tag className="lg:ml-0 ml-auto" label={getInvoiceLabel()} />
