@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
+
 	export let className: string = '';
 </script>
 
@@ -11,4 +13,7 @@
 	</style>
 </svelte:head>
 
-<div class="fixed bottom-0 left-0 right-0 top-0 z-overlay {className} bg-blueGem opacity-60"></div>
+<div
+	class="fixed bottom-0 left-0 right-0 top-0 z-overlay {className} bg-blueGem opacity-60"
+	transition:fade
+></div>
