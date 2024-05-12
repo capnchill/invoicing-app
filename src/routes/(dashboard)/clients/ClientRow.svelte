@@ -3,6 +3,9 @@
 	import AdditionalOptions from '$lib/components/AdditionalOptions.svelte';
 	import Tag from '$lib/components/Tag.svelte';
 
+	// Helper function
+	import { clickOutside } from '$lib/actions/ClickOutside';
+
 	// icons
 	import ThreeDots from '$lib/components/Icon/ThreeDots.svelte';
 	import Edit from '$lib/components/Icon/Edit.svelte';
@@ -84,7 +87,10 @@
 	</div>
 
 	<!-- Additional Options -->
-	<div class="threeDots relative hidden justify-center lg:flex">
+	<div
+		class="threeDots relative hidden justify-center lg:flex"
+		use:clickOutside={() => (isAdditionalMenuShowing = false)}
+	>
 		<button
 			class="text-pastelPurple hover:text-daisyBush"
 			on:click={() => {

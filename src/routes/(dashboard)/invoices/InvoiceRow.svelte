@@ -3,7 +3,7 @@
 	import View from '$lib/components/Icon/View.svelte';
 	import ThreeDots from '$lib/components/Icon/ThreeDots.svelte';
 	import Tag from '$lib/components/Tag.svelte';
-	import { centsToDollars, invoiceTotal, sumLineItems } from '$lib/utils/moneyHelper';
+	import { centsToDollars, invoiceTotal } from '$lib/utils/moneyHelper';
 	import { convertDate, isLate } from '$lib/utils/datesHelpers';
 	import AdditionalOptions from '$lib/components/AdditionalOptions.svelte';
 	import Send from '$lib/components/Icon/Send.svelte';
@@ -11,6 +11,8 @@
 	import Trash from '$lib/components/Icon/Trash.svelte';
 	import SlidePanel from '$lib/components/SlidePanel.svelte';
 	import InvoiceForm from './InvoiceForm.svelte';
+
+	import { clickOutside } from '$lib/actions/ClickOutside';
 
 	export let invoice: Invoice;
 	let isAdditionalMenuShowing = false;
@@ -77,7 +79,10 @@
 			class="hidden text-pastelPurple hover:text-daisyBush lg:block"><View /></a
 		>
 	</div>
-	<div class="moreButton relative hidden items-center justify-center text-sm lg:flex lg:text-lg">
+	<div
+		class="moreButton relative hidden items-center justify-center text-sm lg:flex lg:text-lg"
+		use:clickOutside={() => (isAdditionalMenuShowing = false)}
+	>
 		<button
 			class="hidden text-pastelPurple hover:text-daisyBush lg:block"
 			on:click={() => (isAdditionalMenuShowing = !isAdditionalMenuShowing)}><ThreeDots /></button
