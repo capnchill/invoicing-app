@@ -15,13 +15,13 @@
 	import { clickOutside } from '$lib/actions/ClickOutside';
 	import { swipe } from '$lib/actions/Swipe';
 	import Cancel from '$lib/components/Icon/Cancel.svelte';
-	import { invoices } from '$lib/stores/InvoiceStore';
 
 	export let invoice: Invoice;
 	let isAdditionalMenuShowing = false;
 	let isOptionsDisabled = false;
 	let isModalShowing = false;
 	let isInvoiceShowing = false;
+	let triggerReset = false;
 
 	function handleDelete() {
 		console.log('deleting invoice');
@@ -65,7 +65,10 @@
 <div class="relative">
 	<div
 		class="invoice-table invoice-row relative z-row items-center rounded-lg bg-white py-3 shadow-tableRow lg:py-6"
-		use:swipe
+		use:swipe={{ triggerReset }}
+		on:outofview={() => {
+			triggerReset = false;
+		}}
 	>
 		<div class="status">
 			<Tag className="lg:ml-0 ml-auto" label={getInvoiceLabel()} />
@@ -106,7 +109,7 @@
 
 	<div class="absolute inset-0 z-rowActions flex h-full w-full items-center justify-around">
 		<!-- revealed when we swipe -->
-		<button class="action-button">
+		<button class="action-button" on:click={() => (triggerReset = true)}>
 			<Cancel height={32} width={32} />
 			Cancel
 		</button>

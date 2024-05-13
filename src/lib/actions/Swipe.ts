@@ -1,11 +1,14 @@
 import { spring } from 'svelte/motion';
 
-type SwipeProps = {};
+type SwipeProps = {
+	triggerReset?: boolean;
+};
 
-export function swipe(node: HTMLElement, params: SwipeProps = {}) {
+export function swipe(node: HTMLElement, params: SwipeProps) {
 	let x: number;
 	let startingX: number;
 	const elementWidth = node.clientWidth;
+	let triggerReset = params.triggerReset || false;
 
 	const coordinates = spring({ x: 0, y: 0 }, { stiffness: 0.2, damping: 0.4 });
 
@@ -45,17 +48,16 @@ export function swipe(node: HTMLElement, params: SwipeProps = {}) {
 
 		const movement = startingX - endingX;
 
-		// swiped left
 		if (movement > 20) {
+			// swiped left
 			x = leftSnapX;
-			updateCoordindates(x);
-		}
-
-		// swiped right
-		if (movement < 20) {
+			outOfView();
+		} else {
+			// swiped right
 			x = rightSnapX;
-			updateCoordindates(x);
+			backInView();
 		}
+		updateCoordindates(x);
 	}
 
 	function handleMouseUp(event: MouseEvent) {
@@ -67,8 +69,28 @@ export function swipe(node: HTMLElement, params: SwipeProps = {}) {
 		window.removeEventListener('mouseup', handleMouseUp);
 	}
 
+	function resetCard() {
+		coordinates.update(() => {
+			return { x: 0, y: 0 };
+		});
+		triggerReset = false;
+	}
+
+	function outofview() {
+		node.dispatchEvent(new CustomEvent('outOfView'));
+	}
+
+	function backInView() {
+		node.dispatchEvent(new CustomEvent('backInView'));
+	}
+
 	return {
-		update() {},
+		update(newParams: SwipeProps) {
+			// the code inside update runs whenever the parameters update or change
+			if (newParams.triggerReset) {
+				resetCard();
+			}
+		},
 		destroy() {
 			node.removeEventListener('mousedown', handleMouseDown);
 		}
