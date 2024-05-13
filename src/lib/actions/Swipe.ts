@@ -51,7 +51,7 @@ export function swipe(node: HTMLElement, params: SwipeProps) {
 		if (movement > 20) {
 			// swiped left
 			x = leftSnapX;
-			outOfView();
+			outofview();
 		} else {
 			// swiped right
 			x = rightSnapX;
@@ -77,7 +77,7 @@ export function swipe(node: HTMLElement, params: SwipeProps) {
 	}
 
 	function outofview() {
-		node.dispatchEvent(new CustomEvent('outOfView'));
+		node.dispatchEvent(new CustomEvent('outofview'));
 	}
 
 	function backInView() {
