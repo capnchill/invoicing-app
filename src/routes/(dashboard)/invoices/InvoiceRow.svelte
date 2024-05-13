@@ -107,7 +107,7 @@
 		</div>
 	</div>
 
-	<div class="absolute inset-0 z-rowActions flex h-full w-full items-center justify-around">
+	<div class="swipe-revealed-actions">
 		<!-- revealed when we swipe -->
 		<button class="action-button" on:click={() => (triggerReset = true)}>
 			<Cancel height={32} width={32} />
@@ -150,10 +150,6 @@
 {/if}
 
 <style lang="postcss">
-	.action-button {
-		@apply flex cursor-pointer flex-col items-center justify-center font-bold text-daisyBush;
-	}
-
 	.invoice-row {
 		grid-template-areas:
 			'invoiceNumber invoiceNumber'
