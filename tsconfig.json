@@ -11,7 +11,13 @@
 		"strict": true,
 		"moduleResolution": "bundler"
 	},
-	"include": ["src/**/*"]
+	"include": [
+		"./**/*.svelte",
+		"./**/*.ts",
+		"./**/*.js",
+		".svelte-kit/ambient.d.ts",
+		"src/**/*"
+	  ]
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
 	// except $lib which is handled by https://kit.svelte.dev/docs/configuration#files
 	//
