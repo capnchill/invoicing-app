@@ -13,9 +13,9 @@
 
 	export let closePanel: () => void;
 
-	function handleSubmit() {
+	async function handleSubmit() {
 		if (formStatus === 'create') {
-			addClient(client);
+			await addClient(client);
 			snackbar.send({
 				message: 'Client created successfuly',
 				type: 'success'

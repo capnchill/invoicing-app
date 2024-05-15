@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import supabase from '$lib/utils/supabase';
+import { snackbar } from './SnackbarStore';
 
 export const clients = writable<Client[]>([]);
 
@@ -14,8 +15,28 @@ export async function loadClients() {
 	clients.set(data as Client[]);
 }
 
-export function addClient(clientToAdd: Client) {
-	clients.update((prev: Client[]) => [...prev, { ...clientToAdd, clientStatus: 'active' }]);
+export async function addClient(clientToAdd: Client) {
+	const { data, error } = await supabase
+		.from('client')
+		.insert([{ ...clientToAdd, clientStatus: 'active' }])
+		.select();
+
+	console.log(data);
+
+	if (error) {
+		console.error(error);
+		snackbar.send({
+			message: error.message,
+			type: 'error'
+		});
+		return;
+	}
+
+	const id = data[0].id;
+	console.log(id);
+
+	clients.update((prev: Client[]) => [...prev, { ...clientToAdd, clientStatus: 'active', id }]);
+	return clientToAdd;
 }
 
 export function deleteClient(clientToDelete: Client) {
@@ -26,6 +47,7 @@ export function updateClient(clientToUpdate: Client) {
 	clients.update((store) =>
 		store.map((client) => (client.id === clientToUpdate.id ? clientToUpdate : client))
 	);
+	return clientToUpdate;
 }
 
 export async function getClientById(id: string) {
