@@ -15,8 +15,8 @@
 
 	let isInvoiceShowing = false;
 
-	onMount(() => {
-		loadInvoices();
+	onMount(async () => {
+		await loadInvoices();
 		console.log($invoices);
 	});
 </script>

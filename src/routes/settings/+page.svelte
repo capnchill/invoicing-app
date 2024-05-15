@@ -11,8 +11,8 @@
 
 	let mySettings: Settings = {} as Settings;
 
-	onMount(() => {
-		loadSettings();
+	onMount(async () => {
+		await loadSettings();
 		mySettings = { ...$settings };
 	});
 </script>
