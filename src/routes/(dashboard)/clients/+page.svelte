@@ -16,8 +16,9 @@
 		isClientFormShowing = false;
 	}
 
-	onMount(() => {
-		loadClients();
+	onMount(async () => {
+		await loadClients();
+		console.log($clients);
 	});
 </script>
 

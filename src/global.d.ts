@@ -22,7 +22,7 @@ type Client = {
 	state?: string;
 	street?: string;
 	zip?: string;
-	invoices?: Invoice[];
+	invoice?: Invoice[];
 };
 
 type LineItem = {

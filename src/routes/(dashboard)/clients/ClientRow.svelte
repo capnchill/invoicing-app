@@ -19,28 +19,26 @@
 	import { centsToDollars, sumInvoices } from '$lib/utils/moneyHelper';
 	import SlidePanel from '$lib/components/SlidePanel.svelte';
 	import ClientForm from './ClientForm.svelte';
-	import Send from '$lib/components/Icon/Send.svelte';
 
 	let isAdditionalMenuShowing = false;
 	let isClientFormShowing = false;
-	let isOptionsDisabled = false;
 	let triggerReset = false;
 
 	export let client: Client;
 
 	function receivedInvoices() {
-		if (client?.invoices) {
+		if (client?.invoice) {
 			// find invoices that have been paid
-			const paidInvoices = client.invoices.filter((invoice) => invoice.invoiceStatus === 'paid');
+			const paidInvoices = client.invoice.filter((invoice) => invoice.invoiceStatus === 'paid');
 			return sumInvoices(paidInvoices);
 		}
 		return 0;
 	}
 
 	function balanceInvoices() {
-		if (client?.invoices) {
+		if (client?.invoice) {
 			// find invoices that have not been paid
-			const paidInvoices = client.invoices.filter((invoice) => invoice.invoiceStatus !== 'paid');
+			const paidInvoices = client.invoice.filter((invoice) => invoice.invoiceStatus !== 'paid');
 			return sumInvoices(paidInvoices);
 		}
 		return 0;

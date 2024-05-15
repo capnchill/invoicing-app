@@ -17,7 +17,6 @@
 
 	onMount(async () => {
 		await loadInvoices();
-		console.log($invoices);
 	});
 </script>
 

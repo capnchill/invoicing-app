@@ -47,7 +47,6 @@ export async function getInvoiceById(id: string) {
 	}
 
 	if (data && data[0]) {
-		console.log(data);
 		return data[0] as Invoice;
 	}
 

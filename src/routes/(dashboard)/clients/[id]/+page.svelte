@@ -26,40 +26,38 @@
 	}
 
 	function getDraft(): string {
-		if (!data.client.invoices || data.client.invoices.length === 0) {
+		if (!data.client.invoice || data.client.invoice.length === 0) {
 			return '0.00';
 		}
-		const draftInvoices = data.client?.invoices.filter(
+		const draftInvoices = data.client?.invoice.filter(
 			(invoice) => invoice.invoiceStatus === 'draft'
 		);
 		return centsToDollars(sumInvoices(draftInvoices));
 	}
 
 	function getPaid(): string {
-		if (!data.client.invoices || data.client.invoices.length === 0) {
+		if (!data.client.invoice || data.client.invoice.length === 0) {
 			return '0.00';
 		}
-		const paidInvoices = data.client?.invoices.filter(
-			(invoice) => invoice.invoiceStatus === 'paid'
-		);
+		const paidInvoices = data.client?.invoice.filter((invoice) => invoice.invoiceStatus === 'paid');
 		return centsToDollars(sumInvoices(paidInvoices));
 	}
 
 	function getTotalOverdue(): string {
-		if (!data.client.invoices || data.client.invoices.length === 0) {
+		if (!data.client.invoice || data.client.invoice.length === 0) {
 			return '0.00';
 		}
-		const paidInvoices = data.client?.invoices.filter(
+		const paidInvoices = data.client?.invoice.filter(
 			(invoice) => invoice.invoiceStatus === 'sent' && isLate(invoice.dueDate)
 		);
 		return centsToDollars(sumInvoices(paidInvoices));
 	}
 
 	function getTotalOutstanding(): string {
-		if (!data.client.invoices || data.client.invoices.length === 0) {
+		if (!data.client.invoice || data.client.invoice.length === 0) {
 			return '0.00';
 		}
-		const paidInvoices = data.client?.invoices.filter(
+		const paidInvoices = data.client?.invoice.filter(
 			(invoice) => invoice.invoiceStatus === 'sent' && !isLate(invoice.dueDate)
 		);
 		return centsToDollars(sumInvoices(paidInvoices));
@@ -74,7 +72,7 @@
 	class="mb-7 flex flex-col-reverse items-start justify-between gap-y-6 md:flex-row md:items-center md:gap-y-4 lg:mb-16"
 >
 	<!-- Search Field -->
-	{#if data.client?.invoices && data.client?.invoices.length > 0}
+	{#if data.client?.invoice && data.client?.invoice.length > 0}
 		<Search />
 	{:else}
 		<div></div>
@@ -114,9 +112,9 @@
 </div>
 
 <div>
-	{#if data.client?.invoices === null}
+	{#if data.client?.invoice === null || data.client?.invoice === undefined}
 		Loading ...
-	{:else if data.client?.invoices.length === 0}
+	{:else if data.client?.invoice.length === 0}
 		<!-- blank state, when $invoice.length is 0, render the BlankState Component -->
 		<BlankState />
 	{:else}
@@ -126,11 +124,11 @@
 		<!-- invoices -->
 		<!-- flex-col-reverse is done so that the stacking order logic is maintained -->
 		<div class="flex flex-col-reverse">
-			{#each data.client?.invoices as invoice}
+			{#each data.client?.invoice as invoice}
 				<InvoiceRow {invoice} />
 			{/each}
 		</div>
-		<CircledAmount amount={centsToDollars(sumInvoices(data.client?.invoices))} label="Total" />
+		<CircledAmount amount={centsToDollars(sumInvoices(data.client?.invoice))} label="Total" />
 	{/if}
 </div>
 
