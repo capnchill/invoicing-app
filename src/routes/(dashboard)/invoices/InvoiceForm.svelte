@@ -5,12 +5,15 @@
 	import LineItemRows from './LineItemRows.svelte';
 	import { v4 as uuidv4 } from 'uuid';
 	import { states } from '$lib/utils/states';
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import { loadClients, clients, addClient } from '$lib/stores/ClientStore';
 	import { today } from '$lib/utils/datesHelpers';
-	import { addInvoice, updateInvoice, invoices } from '$lib/stores/InvoiceStore';
+	import { addInvoice, updateInvoice } from '$lib/stores/InvoiceStore';
 	import ConfirmDelete from './ConfirmDelete.svelte';
 	import { snackbar } from '$lib/stores/SnackbarStore';
+
+	export let formState: 'edit' | 'create' = 'create';
+	export let closePanel: () => void = () => {};
 
 	const blankLineItem = {
 		description: '',
@@ -25,15 +28,8 @@
 	} as Invoice;
 
 	let newClient: Partial<Client> = {};
-
-	export let formState: 'edit' | 'create' = 'create';
-
-	export let closePanel: () => void = () => {};
-
 	let isModalShowing = false;
-
 	const intialDiscount = invoice.discount || 0;
-
 	let isNewClient = false;
 
 	function AddLineItem() {
@@ -50,18 +46,14 @@
 		invoice.lineItems = invoice.lineItems;
 	}
 
-	function handleSubmit() {
+	async function handleSubmit() {
 		if (isNewClient) {
 			invoice.client = newClient as Client;
 			addClient(newClient as Client);
 		}
 
 		if (formState === 'create') {
-			addInvoice(invoice);
-			snackbar.send({
-				message: `Your invoice was successfully created`,
-				type: 'success'
-			});
+			await addInvoice(invoice);
 		} else {
 			updateInvoice(invoice);
 			snackbar.send({

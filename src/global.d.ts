@@ -48,3 +48,10 @@ type Snackbar = {
 	message: string;
 	type: NotificationType;
 };
+
+type Error = {
+	code: string;
+	details: string;
+	hint: string;
+	message: string;
+};

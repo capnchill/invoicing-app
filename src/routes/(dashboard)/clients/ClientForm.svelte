@@ -16,10 +16,6 @@
 	async function handleSubmit() {
 		if (formStatus === 'create') {
 			await addClient(client);
-			snackbar.send({
-				message: 'Client created successfuly',
-				type: 'success'
-			});
 		} else {
 			updateClient(client);
 			snackbar.send({
