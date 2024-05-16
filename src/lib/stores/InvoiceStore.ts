@@ -24,7 +24,7 @@ export async function addInvoice(invoiceToAdd: Invoice) {
 	// add the invoice to supabase
 	const invoiceResults = await supabase
 		.from('invoice')
-		.insert([{ ...newInvoice, clientId: client.id }])
+		.insert([{ ...newInvoice, clientId: client.id, invoiceStatus: 'draft' }])
 		.select();
 
 	if (invoiceResults.error) {
@@ -125,8 +125,23 @@ export async function updateInvoice(invoiceToUpdate: Invoice) {
 	return invoiceToUpdate;
 }
 
-export function deleteInvoice(invoiceToDelete: Invoice) {
+export async function deleteInvoice(invoiceToDelete: Invoice) {
+	// delete invoice
+	const { error } = await supabase.from('invoice').delete().eq('id', invoiceToDelete.id);
+
+	if (error) {
+		displayErrorMessage(error as Error);
+		return;
+	}
+
+	// update store
 	invoices.update((prev: Invoice[]) => prev.filter((invoice) => invoice.id !== invoiceToDelete.id));
+
+	// display snackbar message
+	snackbar.send({
+		message: 'Your Invoice was successfully deleted',
+		type: 'success'
+	});
 
 	return invoiceToDelete;
 	// the same invoice is returned that was passed in so that we can show the invoice in toasters, success messages

@@ -15,6 +15,7 @@
 	import { clickOutside } from '$lib/actions/ClickOutside';
 	import { swipe } from '$lib/actions/Swipe';
 	import Cancel from '$lib/components/Icon/Cancel.svelte';
+	import { deleteInvoice } from '$lib/stores/InvoiceStore';
 
 	export let invoice: Invoice;
 	let isAdditionalMenuShowing = false;
@@ -23,8 +24,7 @@
 	let isInvoiceShowing = false;
 	let triggerReset = false;
 
-	function handleDelete() {
-		console.log('deleting invoice');
+	async function handleDelete() {
 		isModalShowing = true;
 		isAdditionalMenuShowing = false;
 	}

@@ -4,10 +4,14 @@
 	import Button from '$lib/components/Button.svelte';
 	import { deleteInvoice } from '$lib/stores/InvoiceStore';
 	import { createEventDispatcher } from 'svelte';
-	import { snackbar } from '$lib/stores/SnackbarStore';
 
 	export let invoice: Invoice;
 	export let isModalShowing = false;
+
+	async function handleDelete() {
+		await deleteInvoice(invoice);
+		dispatch('close');
+	}
 
 	let dispatch = createEventDispatcher();
 </script>
@@ -29,14 +33,7 @@
 			/>
 			<Button
 				label="Yes, Delete it"
-				onClick={() => {
-					deleteInvoice(invoice);
-					dispatch('close');
-					snackbar.send({
-						message: 'Your invoice was successfully deleted',
-						type: 'success'
-					});
-				}}
+				onClick={handleDelete}
 				isAnimated={false}
 				style="destructive"
 			/>
