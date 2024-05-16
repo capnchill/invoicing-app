@@ -29,11 +29,6 @@ export async function addClient(clientToAdd: Client) {
 
 	const id = data[0].id;
 
-	snackbar.send({
-		message: 'Your client was succesfully created',
-		type: 'success'
-	});
-
 	clients.update((prev: Client[]) => [...prev, { ...clientToAdd, clientStatus: 'active', id }]);
 
 	snackbar.send({
@@ -41,7 +36,7 @@ export async function addClient(clientToAdd: Client) {
 		type: 'success'
 	});
 
-	return clientToAdd;
+	return { ...clientToAdd, id };
 }
 
 export function deleteClient(clientToDelete: Client) {
