@@ -12,11 +12,32 @@
 	import BlankState from './BlankState.svelte';
 	import SlidePanel from '$lib/components/SlidePanel.svelte';
 	import InvoiceForm from './InvoiceForm.svelte';
+	import NoSearchResult from './NoSearchResult.svelte';
 
+	let invoiceList: Invoice[] = [];
 	let isInvoiceShowing = false;
+
+	function SearchInvoices(event: CustomEvent) {
+		const keywords = event.detail.searchTerms;
+		invoiceList = $invoices.filter((invoice) => {
+			return (
+				invoice?.client?.name?.toLowerCase().includes(keywords.toLowerCase()) ||
+				invoice?.invoiceNumber?.toLowerCase().includes(keywords.toLowerCase()) ||
+				invoice?.subject?.toLowerCase().includes(keywords.toLowerCase())
+			);
+		});
+	}
+
+	function ClearSearch(event: CustomEvent) {
+		console.log(event.detail.searchTerms);
+		if (event.detail.searchTerms === '') {
+			invoiceList = $invoices;
+		}
+	}
 
 	onMount(async () => {
 		await loadInvoices();
+		invoiceList = $invoices;
 	});
 </script>
 
@@ -29,7 +50,7 @@
 >
 	<!-- Search Field -->
 	{#if $invoices.length > 0}
-		<Search />
+		<Search on:search={SearchInvoices} on:clear={ClearSearch} />
 	{:else}
 		<div></div>
 	{/if}
@@ -47,6 +68,8 @@
 		Loading ...
 	{:else if $invoices.length === 0}
 		<BlankState />
+	{:else if invoiceList.length <= 0}
+		<NoSearchResult />
 	{:else}
 		<!-- header -->
 		<InvoiceRowHeader className="text-daisyBush" />
@@ -54,11 +77,11 @@
 		<!-- invoices -->
 		<!-- flex-col-reverse is done so that the stacking order logic is maintained -->
 		<div class="flex flex-col-reverse">
-			{#each $invoices as invoice}
+			{#each invoiceList as invoice}
 				<InvoiceRow {invoice} />
 			{/each}
 		</div>
-		<CircledAmount amount={centsToDollars(sumInvoices($invoices))} label="Total" />
+		<CircledAmount amount={centsToDollars(sumInvoices(invoiceList))} label="Total" />
 	{/if}
 </div>
 

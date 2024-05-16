@@ -18,7 +18,6 @@
 
 	onMount(async () => {
 		await loadClients();
-		console.log($clients);
 	});
 </script>
 
