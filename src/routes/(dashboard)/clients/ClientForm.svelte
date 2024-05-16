@@ -5,13 +5,14 @@
 	import Trash from '$lib/components/Icon/Trash.svelte';
 	import Check from '$lib/components/Icon/Check.svelte';
 	import { addClient, updateClient } from '$lib/stores/ClientStore';
-	import { snackbar } from '$lib/stores/SnackbarStore';
 	import Snackbar from '$lib/components/Snackbar.svelte';
+	import ConfirmDelete from './ConfirmDelete.svelte';
 
 	export let formStatus: 'create' | 'edit' = 'create';
 	export let client: Client = {} as Client;
-
 	export let closePanel: () => void;
+
+	let isModalShowing = false;
 
 	async function handleSubmit() {
 		if (formStatus === 'create') {
@@ -73,7 +74,7 @@
 		{#if formStatus === 'edit'}
 			<Button
 				label="Delete"
-				onClick={() => {}}
+				onClick={() => (isModalShowing = true)}
 				style="textOnlyDestructive"
 				isAnimated={false}
 				iconLeft={Trash}
@@ -99,3 +100,5 @@
 		</button>
 	</div>
 </form>
+
+<ConfirmDelete {client} on:close={() => (isModalShowing = false)} {isModalShowing} />

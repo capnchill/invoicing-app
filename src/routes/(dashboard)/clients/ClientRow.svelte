@@ -15,11 +15,12 @@
 	import View from '$lib/components/Icon/View.svelte';
 	import Archive from '$lib/components/Icon/Archive.svelte';
 	import Activate from '$lib/components/Icon/Activate.svelte';
-	import { deleteClient } from '$lib/stores/ClientStore';
 	import { centsToDollars, sumInvoices } from '$lib/utils/moneyHelper';
 	import SlidePanel from '$lib/components/SlidePanel.svelte';
 	import ClientForm from './ClientForm.svelte';
+	import ConfirmDelete from './ConfirmDelete.svelte';
 
+	let isModalShowing = false;
 	let isAdditionalMenuShowing = false;
 	let isClientFormShowing = false;
 	let triggerReset = false;
@@ -60,7 +61,7 @@
 	}
 
 	function handleDelete() {
-		deleteClient(client);
+		isModalShowing = true;
 		isAdditionalMenuShowing = false;
 		triggerReset = true;
 	}
@@ -201,6 +202,8 @@
 		<ClientForm {closePanel} formStatus="edit" {client} />
 	</SlidePanel>
 {/if}
+
+<ConfirmDelete {client} on:close={() => (isModalShowing = false)} {isModalShowing} />
 
 <style lang="postcss">
 	.client-row {

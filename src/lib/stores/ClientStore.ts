@@ -39,8 +39,25 @@ export async function addClient(clientToAdd: Client) {
 	return { ...clientToAdd, id };
 }
 
-export function deleteClient(clientToDelete: Client) {
+export async function deleteClient(clientToDelete: Client) {
+	// delete client, db has cascade enabled
+	const { error } = await supabase.from('client').delete().eq('id', clientToDelete.id);
+
+	if (error) {
+		displayErrorMessage(error as Error);
+		return;
+	}
+
+	// update store
 	clients.update((clientStore) => clientStore.filter((client) => client.id !== clientToDelete.id));
+
+	// display success message
+	snackbar.send({
+		message: 'Client was deleted successfully',
+		type: 'success'
+	});
+
+	return clientToDelete;
 }
 
 export async function updateClient(clientToUpdate: Client) {
