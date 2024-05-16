@@ -1,19 +1,40 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import Alert from '$lib/components/Alert.svelte';
+	import Loader from '$lib/components/Loader.svelte';
+	import supabase from '$lib/utils/supabase';
 
 	let email: string,
 		password: string,
-		alertMessage = '';
+		message = '',
+		isLoading = false;
+
+	async function handleSubmit() {
+		isLoading = true;
+
+		const userLogin = await supabase.auth.signInWithPassword({ email, password });
+
+		if (userLogin.error) {
+			console.error(userLogin.error);
+			message = userLogin.error.message;
+			isLoading = false;
+			return;
+		}
+
+		message = '';
+		isLoading = false;
+		goto('/invoices');
+	}
 </script>
 
 <h1 class="auth-heading">Login</h1>
 
-<form>
-	<Alert message={alertMessage} />
+<form on:submit|preventDefault={handleSubmit}>
+	<Alert {message} />
 
 	<div class="field">
 		<label for="email" class="text-goldenFizz">Email</label>
-		<input type="text" name="email" id="email" bind:value={email} />
+		<input type="text" name="email" id="email" bind:value={email} disabled={isLoading} />
 	</div>
 
 	<div class="field">
@@ -29,11 +50,19 @@
 			id="password"
 			placeholder="Your Password"
 			bind:value={password}
+			disabled={isLoading}
 		/>
 	</div>
 
 	<div class="field">
-		<button class="auth-button" type="submit">Login</button>
+		<button class="auth-button center gap-x-2" type="submit">
+			{#if isLoading}
+				<Loader />
+				Loading
+			{:else}
+				Login
+			{/if}
+		</button>
 		<p class="mt-4 text-center text-sm text-white">
 			<a href="/signup" class="underline hover:no-underline"> Don't have an account yet? </a>
 		</p>
