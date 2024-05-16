@@ -17,11 +17,7 @@
 		if (formStatus === 'create') {
 			await addClient(client);
 		} else {
-			updateClient(client);
-			snackbar.send({
-				message: 'Client updated successfuly',
-				type: 'success'
-			});
+			await updateClient(client);
 		}
 		closePanel();
 	}

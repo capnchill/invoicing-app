@@ -48,10 +48,29 @@ export function deleteClient(clientToDelete: Client) {
 	clients.update((clientStore) => clientStore.filter((client) => client.id !== clientToDelete.id));
 }
 
-export function updateClient(clientToUpdate: Client) {
+export async function updateClient(clientToUpdate: Client) {
+	const { invoice, ...newClient } = clientToUpdate;
+
+	const { data, error } = await supabase
+		.from('client')
+		.update(newClient)
+		.eq('id', clientToUpdate.id);
+
+	if (error) {
+		console.error(error);
+		displayErrorMessage(error as Error);
+		return;
+	}
+
 	clients.update((store) =>
 		store.map((client) => (client.id === clientToUpdate.id ? clientToUpdate : client))
 	);
+
+	snackbar.send({
+		message: 'Client updated successfuly',
+		type: 'success'
+	});
+
 	return clientToUpdate;
 }
 
