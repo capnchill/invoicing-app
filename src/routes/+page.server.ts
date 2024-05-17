@@ -1,4 +1,5 @@
-import supabase from '$lib/utils/supabase';
+import { redirect } from '@sveltejs/kit';
 
-// let { error, data: invoice } = await supabase.from('invoice').select('*');
-// console.log(invoice);
+export async function load() {
+	throw redirect(303, '/login');
+}
