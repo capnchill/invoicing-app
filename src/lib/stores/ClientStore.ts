@@ -50,6 +50,7 @@ export async function deleteClient(clientToDelete: Client) {
 
 	// update store
 	clients.update((clientStore) => clientStore.filter((client) => client.id !== clientToDelete.id));
+	console.log('delete function in client store ran');
 
 	// display success message
 	snackbar.send({

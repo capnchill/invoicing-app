@@ -35,9 +35,10 @@
 		}
 	}
 
+	$: clientList = $clients;
+
 	onMount(async () => {
 		await loadClients();
-		clientList = $clients;
 	});
 </script>
 
