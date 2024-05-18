@@ -3,9 +3,7 @@
 
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
-
-	export let data;
-	$: ({ supabase } = data);
+	import supabase from '$lib/utils/supabase';
 
 	onMount(() => {
 		const {
