@@ -6,8 +6,6 @@
 	// export let data;
 
 	onMount(async () => {
-		console.log('trying to logout');
-
 		// const { error } = await data.supabase.auth.signOut();
 
 		const { error } = await supabase.auth.signOut();

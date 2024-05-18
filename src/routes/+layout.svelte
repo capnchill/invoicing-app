@@ -12,6 +12,16 @@
 			invalidate('supabase:auth');
 		});
 
+		// const {
+		// 	data: { subscription }
+		// } = supabase.auth.onAuthStateChange(async () => {
+		// 	const {
+		// 		data: { user: authUser }
+		// 	} = await supabase.auth.getUser();
+		// 	user = authUser;
+		// 	invalidate('supabase:auth');
+		// });
+
 		return () => {
 			subscription.unsubscribe();
 		};

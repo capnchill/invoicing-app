@@ -6,4 +6,6 @@ export async function load({ locals }) {
 	if (!session) {
 		throw redirect(303, '/login');
 	}
+
+	return session;
 }
