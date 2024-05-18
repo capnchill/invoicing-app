@@ -3,7 +3,7 @@
 	import supabase from '$lib/utils/supabase';
 	import { onMount } from 'svelte';
 
-	export let data;
+	// export let data;
 
 	onMount(async () => {
 		console.log('trying to logout');
