@@ -32,6 +32,7 @@ const supabase: Handle = async ({ event, resolve }) => {
 	 * JWT before returning the session.
 	 */
 	event.locals.safeGetSession = async () => {
+		// Fetches the session: It calls supabase.auth.getSession() to fetch the session object from Supabase.
 		const {
 			data: { session }
 		} = await event.locals.supabase.auth.getSession();
@@ -40,6 +41,8 @@ const supabase: Handle = async ({ event, resolve }) => {
 			return { session: null, user: null };
 		}
 
+		// Validates the JWT: It then calls supabase.auth.getUser() to validate the JSON Web Token (JWT) associated with the session.
+		// This ensures that the session is valid and has not been tampered with.
 		const {
 			data: { user },
 			error

@@ -99,7 +99,6 @@ export async function getClientById(id: string) {
 	}
 
 	if (data && data[0]) {
-		console.log(data[0]);
 		return data[0] as Client[];
 	}
 
