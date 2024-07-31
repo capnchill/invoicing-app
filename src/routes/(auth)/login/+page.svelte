@@ -35,6 +35,9 @@
 	<div class="field">
 		<label for="email" class="text-goldenFizz">Email</label>
 		<input type="text" name="email" id="email" bind:value={email} disabled={isLoading} />
+		<div class="text-white">
+			Demo account email: <i class="text-goldenFizz"> demoapp8183@gmail.com </i>
+		</div>
 	</div>
 
 	<div class="field">
@@ -52,6 +55,9 @@
 			bind:value={password}
 			disabled={isLoading}
 		/>
+		<div class="text-white">
+			Demo account password: <i class="text-goldenFizz"> demo1234 </i>
+		</div>
 	</div>
 
 	<div class="field">
